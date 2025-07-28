@@ -2,26 +2,47 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 import WireframeHomepage from "@/components/wireframe/WireframeHomepage";
 import WireframePricing from "@/components/wireframe/WireframePricing";
 import WireframeLogin from "@/components/wireframe/WireframeLogin";
-import { Monitor, Smartphone, Tablet, RotateCcw } from "lucide-react";
+import { Monitor, Smartphone, Tablet, RotateCcw, Download, FileText } from "lucide-react";
+import { usePdfExport } from "@/hooks/usePdfExport";
 
 const WireframeDashboard = () => {
   const [currentView, setCurrentView] = useState<"homepage" | "pricing" | "login">("homepage");
   const [deviceView, setDeviceView] = useState<"desktop" | "tablet" | "mobile">("desktop");
+  const { exportToPdf, exportAllPages } = usePdfExport();
 
   const renderCurrentView = () => {
     switch (currentView) {
       case "homepage":
-        return <WireframeHomepage />;
+        return <div id="wireframe-homepage"><WireframeHomepage /></div>;
       case "pricing":
-        return <WireframePricing />;
+        return <div id="wireframe-pricing"><WireframePricing /></div>;
       case "login":
-        return <WireframeLogin />;
+        return <div id="wireframe-login"><WireframeLogin /></div>;
       default:
-        return <WireframeHomepage />;
+        return <div id="wireframe-homepage"><WireframeHomepage /></div>;
     }
+  };
+
+  const getCurrentPageName = () => {
+    switch (currentView) {
+      case "homepage":
+        return "Midiacode-Homepage";
+      case "pricing":
+        return "Midiacode-Precos";
+      case "login":
+        return "Midiacode-Login";
+      default:
+        return "Midiacode-Homepage";
+    }
+  };
+
+  const handleExportCurrentPage = () => {
+    const elementId = `wireframe-${currentView}`;
+    exportToPdf(elementId, getCurrentPageName());
   };
 
   const getDeviceClass = () => {
@@ -71,29 +92,51 @@ const WireframeDashboard = () => {
               </Button>
             </div>
 
-            {/* Device View Controls */}
-            <div className="flex gap-2 border rounded-lg p-1">
-              <Button
-                variant={deviceView === "desktop" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setDeviceView("desktop")}
-              >
-                <Monitor className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={deviceView === "tablet" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setDeviceView("tablet")}
-              >
-                <Tablet className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={deviceView === "mobile" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setDeviceView("mobile")}
-              >
-                <Smartphone className="h-4 w-4" />
-              </Button>
+            <div className="flex items-center gap-4">
+              {/* Device View Controls */}
+              <div className="flex gap-2 border rounded-lg p-1">
+                <Button
+                  variant={deviceView === "desktop" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setDeviceView("desktop")}
+                >
+                  <Monitor className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={deviceView === "tablet" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setDeviceView("tablet")}
+                >
+                  <Tablet className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={deviceView === "mobile" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setDeviceView("mobile")}
+                >
+                  <Smartphone className="h-4 w-4" />
+                </Button>
+              </div>
+              
+              {/* Export Controls */}
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleExportCurrentPage}
+                >
+                  <Download className="w-4 h-4 mr-1" />
+                  Exportar Página
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={exportAllPages}
+                >
+                  <FileText className="w-4 h-4 mr-1" />
+                  Exportar Todas
+                </Button>
+              </div>
             </div>
           </div>
         </div>

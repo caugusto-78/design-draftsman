@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+import WireframePrivateAreaDemo from "./pages/WireframePrivateAreaDemo";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +17,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<WireframePrivateAreaDemo />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Index />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

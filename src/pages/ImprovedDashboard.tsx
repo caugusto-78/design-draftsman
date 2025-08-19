@@ -5,6 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { 
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { 
   QrCode, 
   FolderOpen, 
   BarChart3, 
@@ -68,11 +75,11 @@ const ImprovedDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <div className="w-64 border-r bg-muted/30 flex flex-col">
-        <div className="p-6">
-          <div className="flex items-center gap-2 mb-8">
+      <div className="w-full lg:w-64 border-b lg:border-r lg:border-b-0 bg-muted/30 flex flex-col">
+        <div className="p-4 lg:p-6">
+          <div className="flex items-center gap-2 mb-6 lg:mb-8">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
               <QrCode className="w-5 h-5 text-white" />
             </div>
@@ -80,19 +87,19 @@ const ImprovedDashboard = () => {
           </div>
           
           {/* Menu Principal */}
-          <nav className="space-y-2 mb-8">
-            <Button variant="secondary" className="w-full justify-start gap-3">
+          <nav className="flex lg:flex-col gap-2 mb-6 lg:mb-8 overflow-x-auto lg:overflow-x-visible">
+            <Button variant="secondary" className="flex-shrink-0 lg:w-full justify-start gap-3">
               <Home className="w-4 h-4" />
-              Home
+              <span className="hidden sm:inline">Home</span>
             </Button>
-            <Button variant="ghost" className="w-full justify-start gap-3">
+            <Button variant="ghost" className="flex-shrink-0 lg:w-full justify-start gap-3">
               <Search className="w-4 h-4" />
-              Pesquisar
+              <span className="hidden sm:inline">Pesquisar</span>
             </Button>
           </nav>
 
           {/* Workspaces */}
-          <div>
+          <div className="hidden lg:block">
             <h3 className="text-sm font-medium text-muted-foreground mb-3">Workspaces</h3>
             <div className="space-y-1">
               {workspaces.map((workspace, index) => (
@@ -115,11 +122,11 @@ const ImprovedDashboard = () => {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <div className="border-b bg-muted/30">
-          <div className="px-6 py-4">
-            <div className="flex items-center justify-between">
+          <div className="px-4 lg:px-6 py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div>
-                <h1 className="text-2xl font-bold text-foreground">Olá, João! 👋</h1>
-                <p className="text-muted-foreground">Bem-vindo de volta ao seu dashboard MiMeCode</p>
+                <h1 className="text-xl lg:text-2xl font-bold text-foreground">Olá, João! 👋</h1>
+                <p className="text-sm lg:text-base text-muted-foreground">Bem-vindo de volta ao seu dashboard MiMeCode</p>
               </div>
               <div className="flex items-center gap-3">
                 <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
@@ -131,28 +138,28 @@ const ImprovedDashboard = () => {
           </div>
         </div>
 
-        <div className="flex-1 flex">
+        <div className="flex-1 flex flex-col xl:flex-row">
           {/* Main Content Area */}
-          <div className="flex-1 px-6 py-8 space-y-8 overflow-auto">
+          <div className="flex-1 px-4 lg:px-6 py-6 lg:py-8 space-y-6 lg:space-y-8 overflow-auto">
             
             {/* Primary CTAs */}
-            <div className="space-y-6">
+            <div className="space-y-4 lg:space-y-6">
               <div>
-                <h2 className="text-xl font-bold mb-2">Comece Agora</h2>
-                <p className="text-muted-foreground">Escolha uma das ações principais para começar</p>
+                <h2 className="text-lg lg:text-xl font-bold mb-2">Comece Agora</h2>
+                <p className="text-sm lg:text-base text-muted-foreground">Escolha uma das ações principais para começar</p>
               </div>
               
-              <div className="grid sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                 <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 hover:border-primary/30 transition-colors">
-                  <CardContent className="p-6">
-                    <Button className="w-full h-auto p-6 text-lg" size="lg">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                          <QrCode className="w-7 h-7" />
+                  <CardContent className="p-4 lg:p-6">
+                    <Button className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg" size="lg">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                          <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />
                         </div>
                         <div className="text-left">
-                          <div className="font-bold text-lg">Criar QR Code</div>
-                          <div className="text-sm opacity-90">Comece a criar o seu primeiro QR Code</div>
+                          <div className="font-bold text-base lg:text-lg">Criar QR Code</div>
+                          <div className="text-xs lg:text-sm opacity-90">Comece a criar o seu primeiro QR Code</div>
                         </div>
                       </div>
                     </Button>
@@ -160,15 +167,15 @@ const ImprovedDashboard = () => {
                 </Card>
 
                 <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100 hover:border-blue-300 transition-colors">
-                  <CardContent className="p-6">
-                    <Button variant="outline" className="w-full h-auto p-6 text-lg border-0 bg-white/50 hover:bg-white/80" size="lg">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                          <FolderOpen className="w-7 h-7 text-blue-600" />
+                  <CardContent className="p-4 lg:p-6">
+                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border-0 bg-white/50 hover:bg-white/80" size="lg">
+                      <div className="flex items-center gap-3 lg:gap-4">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                          <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-blue-600" />
                         </div>
                         <div className="text-left">
-                          <div className="font-bold text-lg text-blue-900">Novo Workspace</div>
-                          <div className="text-sm text-blue-700">Organize os seus projetos por categorias</div>
+                          <div className="font-bold text-base lg:text-lg text-blue-900">Novo Workspace</div>
+                          <div className="text-xs lg:text-sm text-blue-700">Organize os seus projetos por categorias</div>
                         </div>
                       </div>
                     </Button>
@@ -177,7 +184,7 @@ const ImprovedDashboard = () => {
               </div>
 
               {/* Secondary Actions */}
-              <div className="flex gap-4 justify-center pt-4">
+              <div className="flex flex-wrap gap-3 lg:gap-4 justify-center pt-2 lg:pt-4">
                 <Button variant="ghost" size="sm" className="gap-2">
                   <FileText className="w-4 h-4" />
                   Templates
@@ -192,43 +199,55 @@ const ImprovedDashboard = () => {
             {/* Content Types Carousel */}
             <div className="space-y-4">
               <div>
-                <h2 className="text-lg font-semibold mb-2">Tipologias de Conteúdo</h2>
-                <p className="text-sm text-muted-foreground">Escolha o tipo de conteúdo para o seu QR Code</p>
+                <h2 className="text-base lg:text-lg font-semibold mb-2">Tipologias de Conteúdo</h2>
+                <p className="text-xs lg:text-sm text-muted-foreground">Escolha o tipo de conteúdo para o seu QR Code</p>
               </div>
               
-              <div className="relative">
-                <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-                  {contentTypes.map((type, index) => (
-                    <Card key={index} className="min-w-[200px] hover:shadow-md transition-shadow cursor-pointer">
-                      <CardContent className="p-4">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${type.color}`}>
-                            <type.icon className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <h3 className="font-medium text-sm">{type.name}</h3>
-                            <p className="text-xs text-muted-foreground">{type.description}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
+              <div className="relative px-12">
+                <Carousel
+                  opts={{
+                    align: "start",
+                    loop: true,
+                  }}
+                  className="w-full"
+                >
+                  <CarouselContent className="-ml-2 md:-ml-4">
+                    {contentTypes.map((type, index) => (
+                      <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                        <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
+                          <CardContent className="p-4">
+                            <div className="flex flex-col items-center gap-3 text-center">
+                              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${type.color}`}>
+                                <type.icon className="w-6 h-6" />
+                              </div>
+                              <div>
+                                <h3 className="font-medium text-sm">{type.name}</h3>
+                                <p className="text-xs text-muted-foreground mt-1">{type.description}</p>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="hidden sm:flex" />
+                  <CarouselNext className="hidden sm:flex" />
+                </Carousel>
               </div>
             </div>
 
             {/* Quick Stats */}
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold">Estatísticas Rápidas</h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <h2 className="text-base lg:text-lg font-semibold">Estatísticas Rápidas</h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
                 <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <QrCode className="w-4 h-4 text-primary" />
+                  <CardContent className="p-3 lg:p-4">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <QrCode className="w-3 h-3 lg:w-4 lg:h-4 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xl font-bold">{stats.qrCodes}</p>
+                        <p className="text-lg lg:text-xl font-bold">{stats.qrCodes}</p>
                         <p className="text-xs text-muted-foreground">QR Codes</p>
                       </div>
                     </div>
@@ -236,13 +255,13 @@ const ImprovedDashboard = () => {
                 </Card>
 
                 <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="w-4 h-4 text-green-600" />
+                  <CardContent className="p-3 lg:p-4">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                        <BarChart3 className="w-3 h-3 lg:w-4 lg:h-4 text-green-600" />
                       </div>
                       <div>
-                        <p className="text-xl font-bold">{stats.scans}</p>
+                        <p className="text-lg lg:text-xl font-bold">{stats.scans}</p>
                         <p className="text-xs text-muted-foreground">Total Scans</p>
                       </div>
                     </div>
@@ -250,13 +269,13 @@ const ImprovedDashboard = () => {
                 </Card>
 
                 <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <FolderOpen className="w-4 h-4 text-blue-600" />
+                  <CardContent className="p-3 lg:p-4">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <FolderOpen className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />
                       </div>
                       <div>
-                        <p className="text-xl font-bold">{stats.workspaces}</p>
+                        <p className="text-lg lg:text-xl font-bold">{stats.workspaces}</p>
                         <p className="text-xs text-muted-foreground">Workspaces</p>
                       </div>
                     </div>
@@ -264,13 +283,13 @@ const ImprovedDashboard = () => {
                 </Card>
 
                 <Card>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="w-4 h-4 text-orange-600" />
+                  <CardContent className="p-3 lg:p-4">
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-orange-600" />
                       </div>
                       <div>
-                        <p className="text-xl font-bold">+24%</p>
+                        <p className="text-lg lg:text-xl font-bold">+24%</p>
                         <p className="text-xs text-muted-foreground">vs. semana passada</p>
                       </div>
                     </div>
@@ -282,13 +301,13 @@ const ImprovedDashboard = () => {
             {/* Recent QR Codes */}
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div>
-                    <CardTitle className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-primary" />
+                    <CardTitle className="flex items-center gap-2 text-base lg:text-lg">
+                      <Clock className="w-4 h-4 lg:w-5 lg:h-5 text-primary" />
                       Conteúdo Recente
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-xs lg:text-sm">
                       Os seus QR Codes criados recentemente
                     </CardDescription>
                   </div>
@@ -323,11 +342,11 @@ const ImprovedDashboard = () => {
           </div>
 
           {/* Right Sidebar - Account & Upgrade */}
-          <div className="w-80 border-l bg-muted/30 p-6 space-y-6">
+          <div className="w-full xl:w-80 border-t xl:border-l xl:border-t-0 bg-muted/30 p-4 lg:p-6 space-y-4 lg:space-y-6">
             {/* Account Info */}
             <Card>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base">
+                <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
                   <FolderOpen className="w-4 h-4 text-primary" />
                   Workspace Atual
                 </CardTitle>
@@ -335,7 +354,7 @@ const ImprovedDashboard = () => {
               <CardContent className="space-y-4">
                 <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-sm">{selectedWorkspace}</h3>
+                    <h3 className="font-medium text-xs lg:text-sm">{selectedWorkspace}</h3>
                     <Badge variant="secondary" className="text-xs">Ativo</Badge>
                   </div>
                   <div className="space-y-2">
@@ -357,19 +376,19 @@ const ImprovedDashboard = () => {
             {/* Account Limits */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Limites da Conta</CardTitle>
+                <CardTitle className="text-sm lg:text-base">Limites da Conta</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs lg:text-sm">
                     <span>QR Codes criados</span>
                     <span className="font-medium">3 / ∞</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs lg:text-sm">
                     <span>Scans este mês</span>
                     <span className="font-medium">127 / ∞</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs lg:text-sm">
                     <span>Workspaces</span>
                     <span className="font-medium">1 / 3</span>
                   </div>
@@ -380,30 +399,30 @@ const ImprovedDashboard = () => {
             {/* Upgrade Card */}
             <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-base">
+                <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
                   <Zap className="w-4 h-4 text-primary" />
                   Desbloqueie Funcionalidades Pro
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-xs lg:text-sm">
                     <QrCode className="w-3 h-3 text-green-600" />
                     <span>QR Codes ilimitados</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-xs lg:text-sm">
                     <BarChart3 className="w-3 h-3 text-green-600" />
                     <span>Analytics avançados</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-xs lg:text-sm">
                     <Users className="w-3 h-3 text-green-600" />
                     <span>Colaboração em equipa</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-xs lg:text-sm">
                     <Settings className="w-3 h-3 text-green-600" />
                     <span>Personalização avançada</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm">
+                  <div className="flex items-center gap-2 text-xs lg:text-sm">
                     <Star className="w-3 h-3 text-green-600" />
                     <span>Suporte prioritário</span>
                   </div>
@@ -419,7 +438,7 @@ const ImprovedDashboard = () => {
             {/* Help Section */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Precisa de Ajuda?</CardTitle>
+                <CardTitle className="text-xs lg:text-sm">Precisa de Ajuda?</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
                 <Button variant="ghost" className="w-full justify-start h-auto p-2" size="sm">

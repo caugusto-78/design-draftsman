@@ -36,11 +36,14 @@ import {
   Phone,
   MapPin,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Menu,
+  X
 } from "lucide-react";
 
 const ImprovedDashboard = () => {
   const [selectedWorkspace, setSelectedWorkspace] = useState("Meu Primeiro Workspace");
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   // Dados simulados
   const stats = {
@@ -58,14 +61,14 @@ const ImprovedDashboard = () => {
 
   // Tipologias de conteúdo para o carrossel
   const contentTypes = [
-    { name: "File", icon: File, description: "PDFs, documentos", color: "bg-blue-100 text-blue-600" },
-    { name: "URL", icon: Link, description: "Links para websites", color: "bg-green-100 text-green-600" },
-    { name: "Redes Sociais", icon: Share2, description: "Instagram, Facebook", color: "bg-purple-100 text-purple-600" },
-    { name: "LinkTree", icon: TreePine, description: "Múltiplos links", color: "bg-orange-100 text-orange-600" },
-    { name: "Video", icon: Video, description: "YouTube, Vimeo", color: "bg-red-100 text-red-600" },
-    { name: "Email", icon: Mail, description: "Contacto direto", color: "bg-cyan-100 text-cyan-600" },
-    { name: "Telefone", icon: Phone, description: "Chamada direta", color: "bg-emerald-100 text-emerald-600" },
-    { name: "Localização", icon: MapPin, description: "Google Maps", color: "bg-indigo-100 text-indigo-600" }
+    { name: "File", icon: File, description: "PDFs, documentos", color: "bg-muted text-foreground" },
+    { name: "URL", icon: Link, description: "Links para websites", color: "bg-muted text-foreground" },
+    { name: "Redes Sociais", icon: Share2, description: "Instagram, Facebook", color: "bg-muted text-foreground" },
+    { name: "LinkTree", icon: TreePine, description: "Múltiplos links", color: "bg-muted text-foreground" },
+    { name: "Video", icon: Video, description: "YouTube, Vimeo", color: "bg-muted text-foreground" },
+    { name: "Email", icon: Mail, description: "Contacto direto", color: "bg-muted text-foreground" },
+    { name: "Telefone", icon: Phone, description: "Chamada direta", color: "bg-muted text-foreground" },
+    { name: "Localização", icon: MapPin, description: "Google Maps", color: "bg-muted text-foreground" }
   ];
 
   const workspaces = [
@@ -77,44 +80,70 @@ const ImprovedDashboard = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <div className="w-full lg:w-64 border-b lg:border-r lg:border-b-0 bg-muted/30 flex flex-col">
+      <div className={`${isSidebarCollapsed ? 'w-16' : 'w-full lg:w-64'} border-b lg:border-r lg:border-b-0 bg-muted/30 flex flex-col transition-all duration-300`}>
         <div className="p-4 lg:p-6">
           <div className="flex items-center gap-2 mb-6 lg:mb-8">
             <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <QrCode className="w-5 h-5 text-white" />
+              <QrCode className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="font-bold text-lg">MiMeCode</span>
+            {!isSidebarCollapsed && <span className="font-bold text-lg">MiMeCode</span>}
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+              className="ml-auto lg:ml-0"
+            >
+              {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
+            </Button>
           </div>
           
           {/* Menu Principal */}
-          <nav className="flex lg:flex-col gap-2 mb-6 lg:mb-8 overflow-x-auto lg:overflow-x-visible">
-            <Button variant="secondary" className="flex-shrink-0 lg:w-full justify-start gap-3">
+          <nav className={`flex ${isSidebarCollapsed ? 'flex-col' : 'lg:flex-col'} gap-2 mb-6 lg:mb-8 overflow-x-auto lg:overflow-x-visible`}>
+            <Button variant="secondary" className={`flex-shrink-0 ${isSidebarCollapsed ? 'justify-center' : 'lg:w-full justify-start'} gap-3`}>
               <Home className="w-4 h-4" />
-              <span className="hidden sm:inline">Home</span>
+              {!isSidebarCollapsed && <span className="hidden sm:inline">Home</span>}
             </Button>
-            <Button variant="ghost" className="flex-shrink-0 lg:w-full justify-start gap-3">
+            <Button variant="ghost" className={`flex-shrink-0 ${isSidebarCollapsed ? 'justify-center' : 'lg:w-full justify-start'} gap-3`}>
               <Search className="w-4 h-4" />
-              <span className="hidden sm:inline">Pesquisar</span>
+              {!isSidebarCollapsed && <span className="hidden sm:inline">Pesquisar</span>}
             </Button>
           </nav>
 
           {/* Workspaces */}
-          <div className="hidden lg:block">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">Workspaces</h3>
-            <div className="space-y-1">
+          {!isSidebarCollapsed && (
+            <div className="hidden lg:block">
+              <h3 className="text-sm font-medium text-muted-foreground mb-3">Workspaces</h3>
+              <div className="space-y-1">
+                {workspaces.map((workspace, index) => (
+                  <Button 
+                    key={index} 
+                    variant={workspace.active ? "secondary" : "ghost"} 
+                    className="w-full justify-start gap-3 text-sm"
+                    size="sm"
+                  >
+                    <FolderOpen className="w-4 h-4" />
+                    {workspace.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Collapsed Workspaces */}
+          {isSidebarCollapsed && (
+            <div className="hidden lg:block space-y-1">
               {workspaces.map((workspace, index) => (
                 <Button 
                   key={index} 
                   variant={workspace.active ? "secondary" : "ghost"} 
-                  className="w-full justify-start gap-3 text-sm"
+                  className="w-full justify-center"
                   size="sm"
                 >
                   <FolderOpen className="w-4 h-4" />
-                  {workspace.name}
                 </Button>
               ))}
             </div>
-          </div>
+          )}
         </div>
       </div>
 
@@ -150,11 +179,11 @@ const ImprovedDashboard = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10 hover:border-primary/30 transition-colors">
+                <Card className="border-2 border-primary/20 bg-muted/30 hover:border-primary/30 transition-colors">
                   <CardContent className="p-4 lg:p-6">
                     <Button className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg" size="lg">
                       <div className="flex items-center gap-3 lg:gap-4">
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
                           <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />
                         </div>
                         <div className="text-left">
@@ -166,16 +195,16 @@ const ImprovedDashboard = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="border-2 border-blue-200 bg-gradient-to-br from-blue-50 to-blue-100 hover:border-blue-300 transition-colors">
+                <Card className="border-2 border-muted bg-muted/30 hover:border-foreground/30 transition-colors">
                   <CardContent className="p-4 lg:p-6">
-                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border-0 bg-white/50 hover:bg-white/80" size="lg">
+                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border-0 bg-background/50 hover:bg-background/80" size="lg">
                       <div className="flex items-center gap-3 lg:gap-4">
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                          <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-blue-600" />
+                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-muted rounded-xl flex items-center justify-center">
+                          <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" />
                         </div>
                         <div className="text-left">
-                          <div className="font-bold text-base lg:text-lg text-blue-900">Novo Workspace</div>
-                          <div className="text-xs lg:text-sm text-blue-700">Organize os seus projetos por categorias</div>
+                          <div className="font-bold text-base lg:text-lg text-foreground">Novo Workspace</div>
+                          <div className="text-xs lg:text-sm text-muted-foreground">Organize os seus projetos por categorias</div>
                         </div>
                       </div>
                     </Button>
@@ -243,8 +272,8 @@ const ImprovedDashboard = () => {
                 <Card>
                   <CardContent className="p-3 lg:p-4">
                     <div className="flex items-center gap-2 lg:gap-3">
-                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <QrCode className="w-3 h-3 lg:w-4 lg:h-4 text-primary" />
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-muted rounded-lg flex items-center justify-center">
+                        <QrCode className="w-3 h-3 lg:w-4 lg:h-4 text-foreground" />
                       </div>
                       <div>
                         <p className="text-lg lg:text-xl font-bold">{stats.qrCodes}</p>
@@ -257,8 +286,8 @@ const ImprovedDashboard = () => {
                 <Card>
                   <CardContent className="p-3 lg:p-4">
                     <div className="flex items-center gap-2 lg:gap-3">
-                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <BarChart3 className="w-3 h-3 lg:w-4 lg:h-4 text-green-600" />
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-muted rounded-lg flex items-center justify-center">
+                        <BarChart3 className="w-3 h-3 lg:w-4 lg:h-4 text-foreground" />
                       </div>
                       <div>
                         <p className="text-lg lg:text-xl font-bold">{stats.scans}</p>
@@ -271,8 +300,8 @@ const ImprovedDashboard = () => {
                 <Card>
                   <CardContent className="p-3 lg:p-4">
                     <div className="flex items-center gap-2 lg:gap-3">
-                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <FolderOpen className="w-3 h-3 lg:w-4 lg:h-4 text-blue-600" />
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-muted rounded-lg flex items-center justify-center">
+                        <FolderOpen className="w-3 h-3 lg:w-4 lg:h-4 text-foreground" />
                       </div>
                       <div>
                         <p className="text-lg lg:text-xl font-bold">{stats.workspaces}</p>
@@ -285,8 +314,8 @@ const ImprovedDashboard = () => {
                 <Card>
                   <CardContent className="p-3 lg:p-4">
                     <div className="flex items-center gap-2 lg:gap-3">
-                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-orange-100 rounded-lg flex items-center justify-center">
-                        <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-orange-600" />
+                      <div className="w-6 h-6 lg:w-8 lg:h-8 bg-muted rounded-lg flex items-center justify-center">
+                        <TrendingUp className="w-3 h-3 lg:w-4 lg:h-4 text-foreground" />
                       </div>
                       <div>
                         <p className="text-lg lg:text-xl font-bold">+24%</p>
@@ -343,36 +372,6 @@ const ImprovedDashboard = () => {
 
           {/* Right Sidebar - Account & Upgrade */}
           <div className="w-full xl:w-80 border-t xl:border-l xl:border-t-0 bg-muted/30 p-4 lg:p-6 space-y-4 lg:space-y-6">
-            {/* Account Info */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
-                  <FolderOpen className="w-4 h-4 text-primary" />
-                  Workspace Atual
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-3 bg-primary/5 border border-primary/20 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium text-xs lg:text-sm">{selectedWorkspace}</h3>
-                    <Badge variant="secondary" className="text-xs">Ativo</Badge>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs">
-                      <span>QR Codes utilizados</span>
-                      <span>3 / ∞</span>
-                    </div>
-                    <Progress value={30} className="h-1" />
-                  </div>
-                </div>
-                
-                <Button variant="outline" className="w-full" size="sm">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Gerir Workspace
-                </Button>
-              </CardContent>
-            </Card>
-
             {/* Account Limits */}
             <Card>
               <CardHeader>
@@ -397,7 +396,7 @@ const ImprovedDashboard = () => {
             </Card>
 
             {/* Upgrade Card */}
-            <Card className="border-primary/20 bg-gradient-to-br from-primary/5 to-primary/10">
+            <Card className="border-primary/20 bg-muted/30">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-sm lg:text-base">
                   <Zap className="w-4 h-4 text-primary" />
@@ -407,23 +406,23 @@ const ImprovedDashboard = () => {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-xs lg:text-sm">
-                    <QrCode className="w-3 h-3 text-green-600" />
+                    <QrCode className="w-3 h-3 text-foreground" />
                     <span>QR Codes ilimitados</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs lg:text-sm">
-                    <BarChart3 className="w-3 h-3 text-green-600" />
+                    <BarChart3 className="w-3 h-3 text-foreground" />
                     <span>Analytics avançados</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs lg:text-sm">
-                    <Users className="w-3 h-3 text-green-600" />
+                    <Users className="w-3 h-3 text-foreground" />
                     <span>Colaboração em equipa</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs lg:text-sm">
-                    <Settings className="w-3 h-3 text-green-600" />
+                    <Settings className="w-3 h-3 text-foreground" />
                     <span>Personalização avançada</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs lg:text-sm">
-                    <Star className="w-3 h-3 text-green-600" />
+                    <Star className="w-3 h-3 text-foreground" />
                     <span>Suporte prioritário</span>
                   </div>
                 </div>

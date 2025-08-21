@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +9,26 @@ import { QrCode, FolderOpen, BarChart3, Settings, Plus, Zap, Clock, Users, FileT
 const ImprovedDashboard = () => {
   const [selectedWorkspace, setSelectedWorkspace] = useState("Meu Primeiro Workspace");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+
+  // Mensagens deslizantes para o banner
+  const bannerMessages = [
+    "Sabia que pode criar um QR Code directo para os seus documentos partilhados?",
+    "Sabia que pode activar geolocalização para activação dos seus conteúdos?",
+    "Crie QR Codes para vCards e partilhe os seus contactos instantaneamente!",
+    "Transforme links longos em QR Codes elegantes e fáceis de partilhar!",
+    "Conecte-se às redes sociais através de QR Codes personalizados!",
+    "Crie menus digitais e catálogos interactivos com QR Codes!"
+  ];
+
+  // Animação das mensagens do banner
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentMessageIndex((prev) => (prev + 1) % bannerMessages.length);
+    }, 3000); // Mudança a cada 3 segundos para melhor legibilidade
+
+    return () => clearInterval(interval);
+  }, [bannerMessages.length]);
 
   // Dados simulados
   const stats = {
@@ -165,57 +185,65 @@ const ImprovedDashboard = () => {
           {/* Main Content Area */}
           <div className="flex-1 px-4 lg:px-6 py-6 lg:py-8 space-y-6 lg:space-y-8 overflow-auto">
             
-            {/* Primary CTAs */}
-            <div className="space-y-4 lg:space-y-6">
-              <div>
-                <h2 className="text-lg lg:text-xl font-bold mb-2">Comece rápido</h2>
-                <p className="text-sm lg:text-base text-muted-foreground">Escolha uma das ações principais para começar</p>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                <Card className="border-0 bg-transparent">
-                  <CardContent className="p-4 lg:p-6">
-                    <Button size="lg" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg bg-black text-white hover:bg-black/80">
-                      <div className="flex items-center gap-3 lg:gap-4">
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
-                          <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />
-                        </div>
-                        <div className="text-left">
-                          <div className="font-bold text-base lg:text-lg">Criar QR Code</div>
-                          <div className="text-xs lg:text-sm opacity-90">Comece a criar o seu primeiro QR Code</div>
-                        </div>
-                      </div>
-                    </Button>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-0 bg-transparent">
-                  <CardContent className="p-4 lg:p-6">
-                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border border-black bg-transparent hover:bg-black/5" size="lg">
-                      <div className="flex items-center gap-3 lg:gap-4">
-                        <div className="w-10 h-10 lg:w-12 lg:h-12 bg-muted rounded-xl flex items-center justify-center">
-                          <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" />
-                        </div>
-                        <div className="text-left">
-                          <div className="font-bold text-base lg:text-lg text-foreground">Novo Workspace</div>
-                          <div className="text-xs lg:text-sm text-muted-foreground">Organize os seus projetos por categorias</div>
-                        </div>
-                      </div>
-                    </Button>
-                  </CardContent>
-                </Card>
+            {/* Hero Section */}
+            <div className="space-y-8 lg:space-y-12">
+              {/* Banner deslizante */}
+              <div className="relative bg-primary/5 rounded-lg p-4 overflow-hidden">
+                <div className="text-center">
+                  <p className="text-sm lg:text-base text-primary font-medium animate-fade-in">
+                    {bannerMessages[currentMessageIndex]}
+                  </p>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent animate-pulse" />
               </div>
 
-              {/* Secondary Actions */}
-              <div className="flex flex-wrap gap-3 lg:gap-4 justify-center pt-2 lg:pt-4">
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <FileText className="w-4 h-4" />
-                  Templates
-                </Button>
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <PlayCircle className="w-4 h-4" />
-                  Tutorial (3 min)
-                </Button>
+              {/* Hero Content */}
+              <div className="text-center space-y-8 lg:space-y-12">
+                <div className="space-y-4">
+                  <h2 className="text-2xl lg:text-4xl font-bold text-foreground">Crie agora</h2>
+                  <p className="text-base lg:text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Escolha uma das ações principais para começar
+                  </p>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center max-w-2xl mx-auto">
+                  <Button size="lg" className="h-auto p-4 lg:p-6 text-base lg:text-lg bg-black text-white hover:bg-black/80 flex-1 sm:flex-initial">
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+                        <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold text-base lg:text-lg">Criar QR Code</div>
+                        <div className="text-xs lg:text-sm opacity-90">Comece a criar o seu primeiro QR Code</div>
+                      </div>
+                    </div>
+                  </Button>
+
+                  <Button variant="outline" className="h-auto p-4 lg:p-6 text-base lg:text-lg border border-black bg-transparent hover:bg-black/5 flex-1 sm:flex-initial" size="lg">
+                    <div className="flex items-center gap-3 lg:gap-4">
+                      <div className="w-10 h-10 lg:w-12 lg:h-12 bg-muted rounded-xl flex items-center justify-center">
+                        <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" />
+                      </div>
+                      <div className="text-left">
+                        <div className="font-bold text-base lg:text-lg text-foreground">Novo Workspace</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground">Organize os seus projetos por categorias</div>
+                      </div>
+                    </div>
+                  </Button>
+                </div>
+
+                {/* Secondary Actions */}
+                <div className="flex flex-wrap gap-3 lg:gap-4 justify-center">
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <FileText className="w-4 h-4" />
+                    Templates
+                  </Button>
+                  <Button variant="ghost" size="sm" className="gap-2">
+                    <PlayCircle className="w-4 h-4" />
+                    Tutorial (3 min)
+                  </Button>
+                </div>
               </div>
             </div>
 

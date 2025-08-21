@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import WireframePrivateAreaDemo from "./pages/WireframePrivateAreaDemo";
+import ImprovedDashboard from "./pages/ImprovedDashboard";
 
 const queryClient = new QueryClient();
 
@@ -17,9 +18,10 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<WireframePrivateAreaDemo />} />
+          <Route path="/" element={<ImprovedDashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Index />} />
+          <Route path="/wireframe" element={<WireframePrivateAreaDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

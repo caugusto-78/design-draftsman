@@ -164,7 +164,7 @@ const ImprovedDashboard = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                <Card className="border-2 border-primary/20 bg-muted/30 hover:border-primary/30 transition-colors">
+                <Card className="border-0 bg-transparent hover:bg-transparent transition-colors">
                   <CardContent className="p-4 lg:p-6">
                     <Button className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg" size="lg">
                       <div className="flex items-center gap-3 lg:gap-4">

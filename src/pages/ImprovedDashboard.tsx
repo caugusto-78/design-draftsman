@@ -91,7 +91,7 @@ const ImprovedDashboard = () => {
               variant="ghost" 
               size="sm" 
               onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-              className="ml-auto lg:ml-0"
+              className={`${isSidebarCollapsed ? 'ml-0' : 'ml-auto lg:ml-0'} shrink-0`}
             >
               {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
             </Button>

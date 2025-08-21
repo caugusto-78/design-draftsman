@@ -164,9 +164,9 @@ const ImprovedDashboard = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                <Card className="border-0 bg-transparent hover:bg-transparent transition-colors">
+                <Card className="border-2 border-primary/20 bg-muted/30 hover:border-primary/30 transition-colors">
                   <CardContent className="p-4 lg:p-6">
-                    <Button className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg" size="lg">
+                    <Button size="lg" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg bg-slate-50">
                       <div className="flex items-center gap-3 lg:gap-4">
                         <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
                           <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />

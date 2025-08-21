@@ -91,13 +91,22 @@ const ImprovedDashboard = () => {
       <div className={`${isSidebarCollapsed ? 'w-16' : 'w-full lg:w-64'} border-b lg:border-r lg:border-b-0 bg-muted/30 flex flex-col transition-all duration-300`}>
         <div className="p-4 lg:p-6">
           <div className="flex items-center gap-2 mb-6 lg:mb-8">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <QrCode className="w-5 h-5 text-primary-foreground" />
-            </div>
-            {!isSidebarCollapsed && <span className="font-bold text-lg">MiMeCode</span>}
-            <Button variant="ghost" size="sm" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} className={`${isSidebarCollapsed ? 'ml-0' : 'ml-auto lg:ml-0'} shrink-0`}>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
+              className="shrink-0 p-2"
+            >
               {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
             </Button>
+            {!isSidebarCollapsed && (
+              <>
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <QrCode className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="font-bold text-lg">MiMeCode</span>
+              </>
+            )}
           </div>
           
           {/* Menu Principal */}

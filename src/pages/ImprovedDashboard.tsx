@@ -173,9 +173,9 @@ const ImprovedDashboard = () => {
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
-                <Card className="border-2 border-primary/20 bg-muted/30 hover:border-primary/30 transition-colors">
+                <Card className="border-0 bg-transparent">
                   <CardContent className="p-4 lg:p-6">
-                    <Button size="lg" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg bg-slate-50">
+                    <Button size="lg" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg bg-black text-white hover:bg-black/80">
                       <div className="flex items-center gap-3 lg:gap-4">
                         <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
                           <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />
@@ -189,9 +189,9 @@ const ImprovedDashboard = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="border-2 border-muted bg-muted/30 hover:border-foreground/30 transition-colors">
+                <Card className="border-0 bg-transparent">
                   <CardContent className="p-4 lg:p-6">
-                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border-0 bg-background/50 hover:bg-background/80" size="lg">
+                    <Button variant="outline" className="w-full h-auto p-4 lg:p-6 text-base lg:text-lg border border-black bg-transparent hover:bg-black/5" size="lg">
                       <div className="flex items-center gap-3 lg:gap-4">
                         <div className="w-10 h-10 lg:w-12 lg:h-12 bg-muted rounded-xl flex items-center justify-center">
                           <FolderOpen className="w-6 h-6 lg:w-7 lg:h-7 text-foreground" />

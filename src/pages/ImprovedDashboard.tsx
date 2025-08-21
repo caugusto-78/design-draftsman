@@ -4,43 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { 
-  QrCode, 
-  FolderOpen, 
-  BarChart3, 
-  Settings, 
-  Plus, 
-  Zap, 
-  Clock, 
-  Users,
-  FileText,
-  PlayCircle,
-  ArrowRight,
-  Star,
-  TrendingUp,
-  Home,
-  Search,
-  File,
-  Link,
-  Share2,
-  Video,
-  TreePine,
-  Mail,
-  Phone,
-  MapPin,
-  ChevronLeft,
-  ChevronRight,
-  Menu,
-  X
-} from "lucide-react";
-
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { QrCode, FolderOpen, BarChart3, Settings, Plus, Zap, Clock, Users, FileText, PlayCircle, ArrowRight, Star, TrendingUp, Home, Search, File, Link, Share2, Video, TreePine, Mail, Phone, MapPin, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 const ImprovedDashboard = () => {
   const [selectedWorkspace, setSelectedWorkspace] = useState("Meu Primeiro Workspace");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -52,33 +17,76 @@ const ImprovedDashboard = () => {
     workspaces: 1,
     daysLeft: 12
   };
-
-  const recentQrCodes = [
-    { name: "QR - Website Principal", type: "Website", scans: 45, created: "há 2 dias" },
-    { name: "QR - vCard João Silva", type: "vCard", scans: 23, created: "há 3 dias" },
-    { name: "QR - Menu Restaurante", type: "PDF", scans: 59, created: "há 1 semana" }
-  ];
+  const recentQrCodes = [{
+    name: "QR - Website Principal",
+    type: "Website",
+    scans: 45,
+    created: "há 2 dias"
+  }, {
+    name: "QR - vCard João Silva",
+    type: "vCard",
+    scans: 23,
+    created: "há 3 dias"
+  }, {
+    name: "QR - Menu Restaurante",
+    type: "PDF",
+    scans: 59,
+    created: "há 1 semana"
+  }];
 
   // Tipologias de conteúdo para o carrossel
-  const contentTypes = [
-    { name: "File", icon: File, description: "PDFs, documentos", color: "bg-muted text-foreground" },
-    { name: "URL", icon: Link, description: "Links para websites", color: "bg-muted text-foreground" },
-    { name: "Redes Sociais", icon: Share2, description: "Instagram, Facebook", color: "bg-muted text-foreground" },
-    { name: "LinkTree", icon: TreePine, description: "Múltiplos links", color: "bg-muted text-foreground" },
-    { name: "Video", icon: Video, description: "YouTube, Vimeo", color: "bg-muted text-foreground" },
-    { name: "Email", icon: Mail, description: "Contacto direto", color: "bg-muted text-foreground" },
-    { name: "Telefone", icon: Phone, description: "Chamada direta", color: "bg-muted text-foreground" },
-    { name: "Localização", icon: MapPin, description: "Google Maps", color: "bg-muted text-foreground" }
-  ];
-
-  const workspaces = [
-    { name: "Meu Primeiro Workspace", active: true },
-    { name: "Empresa XYZ", active: false },
-    { name: "Projeto Pessoal", active: false }
-  ];
-
-  return (
-    <div className="min-h-screen bg-background flex flex-col lg:flex-row">
+  const contentTypes = [{
+    name: "File",
+    icon: File,
+    description: "PDFs, documentos",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "URL",
+    icon: Link,
+    description: "Links para websites",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "Redes Sociais",
+    icon: Share2,
+    description: "Instagram, Facebook",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "LinkTree",
+    icon: TreePine,
+    description: "Múltiplos links",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "Video",
+    icon: Video,
+    description: "YouTube, Vimeo",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "Email",
+    icon: Mail,
+    description: "Contacto direto",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "Telefone",
+    icon: Phone,
+    description: "Chamada direta",
+    color: "bg-muted text-foreground"
+  }, {
+    name: "Localização",
+    icon: MapPin,
+    description: "Google Maps",
+    color: "bg-muted text-foreground"
+  }];
+  const workspaces = [{
+    name: "Meu Primeiro Workspace",
+    active: true
+  }, {
+    name: "Empresa XYZ",
+    active: false
+  }, {
+    name: "Projeto Pessoal",
+    active: false
+  }];
+  return <div className="min-h-screen bg-background flex flex-col lg:flex-row">
       {/* Sidebar */}
       <div className={`${isSidebarCollapsed ? 'w-16' : 'w-full lg:w-64'} border-b lg:border-r lg:border-b-0 bg-muted/30 flex flex-col transition-all duration-300`}>
         <div className="p-4 lg:p-6">
@@ -87,12 +95,7 @@ const ImprovedDashboard = () => {
               <QrCode className="w-5 h-5 text-primary-foreground" />
             </div>
             {!isSidebarCollapsed && <span className="font-bold text-lg">MiMeCode</span>}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-              className={`${isSidebarCollapsed ? 'ml-0' : 'ml-auto lg:ml-0'} shrink-0`}
-            >
+            <Button variant="ghost" size="sm" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)} className={`${isSidebarCollapsed ? 'ml-0' : 'ml-auto lg:ml-0'} shrink-0`}>
               {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
             </Button>
           </div>
@@ -110,40 +113,22 @@ const ImprovedDashboard = () => {
           </nav>
 
           {/* Workspaces */}
-          {!isSidebarCollapsed && (
-            <div className="hidden lg:block">
+          {!isSidebarCollapsed && <div className="hidden lg:block">
               <h3 className="text-sm font-medium text-muted-foreground mb-3">Workspaces</h3>
               <div className="space-y-1">
-                {workspaces.map((workspace, index) => (
-                  <Button 
-                    key={index} 
-                    variant={workspace.active ? "secondary" : "ghost"} 
-                    className="w-full justify-start gap-3 text-sm"
-                    size="sm"
-                  >
+                {workspaces.map((workspace, index) => <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-start gap-3 text-sm" size="sm">
                     <FolderOpen className="w-4 h-4" />
                     {workspace.name}
-                  </Button>
-                ))}
+                  </Button>)}
               </div>
-            </div>
-          )}
+            </div>}
           
           {/* Collapsed Workspaces */}
-          {isSidebarCollapsed && (
-            <div className="hidden lg:block space-y-1">
-              {workspaces.map((workspace, index) => (
-                <Button 
-                  key={index} 
-                  variant={workspace.active ? "secondary" : "ghost"} 
-                  className="w-full justify-center"
-                  size="sm"
-                >
+          {isSidebarCollapsed && <div className="hidden lg:block space-y-1">
+              {workspaces.map((workspace, index) => <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-center" size="sm">
                   <FolderOpen className="w-4 h-4" />
-                </Button>
-              ))}
-            </div>
-          )}
+                </Button>)}
+            </div>}
         </div>
       </div>
 
@@ -174,7 +159,7 @@ const ImprovedDashboard = () => {
             {/* Primary CTAs */}
             <div className="space-y-4 lg:space-y-6">
               <div>
-                <h2 className="text-lg lg:text-xl font-bold mb-2">Comece Agora</h2>
+                <h2 className="text-lg lg:text-xl font-bold mb-2">Comece rápido</h2>
                 <p className="text-sm lg:text-base text-muted-foreground">Escolha uma das ações principais para começar</p>
               </div>
               
@@ -233,16 +218,12 @@ const ImprovedDashboard = () => {
               </div>
               
               <div className="relative px-12">
-                <Carousel
-                  opts={{
-                    align: "start",
-                    loop: true,
-                  }}
-                  className="w-full"
-                >
+                <Carousel opts={{
+                align: "start",
+                loop: true
+              }} className="w-full">
                   <CarouselContent className="-ml-2 md:-ml-4">
-                    {contentTypes.map((type, index) => (
-                      <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                    {contentTypes.map((type, index) => <CarouselItem key={index} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
                         <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
                           <CardContent className="p-4">
                             <div className="flex flex-col items-center gap-3 text-center">
@@ -256,8 +237,7 @@ const ImprovedDashboard = () => {
                             </div>
                           </CardContent>
                         </Card>
-                      </CarouselItem>
-                    ))}
+                      </CarouselItem>)}
                   </CarouselContent>
                   <CarouselPrevious className="hidden sm:flex" />
                   <CarouselNext className="hidden sm:flex" />
@@ -348,8 +328,7 @@ const ImprovedDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  {recentQrCodes.map((qr, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
+                  {recentQrCodes.map((qr, index) => <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg hover:bg-muted/50 transition-colors">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-background rounded border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
                           <QrCode className="w-4 h-4 text-muted-foreground" />
@@ -363,8 +342,7 @@ const ImprovedDashboard = () => {
                         <p className="font-semibold text-sm">{qr.scans}</p>
                         <p className="text-xs text-muted-foreground">scans</p>
                       </div>
-                    </div>
-                  ))}
+                    </div>)}
                 </div>
               </CardContent>
             </Card>
@@ -465,8 +443,6 @@ const ImprovedDashboard = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ImprovedDashboard;

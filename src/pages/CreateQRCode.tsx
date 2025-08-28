@@ -2,79 +2,352 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap, Facebook, Instagram, Linkedin, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import * as React from "react";
 
 const CreateQRCode = () => {
   const navigate = useNavigate();
-  const [selectedContentType, setSelectedContentType] = useState("");
-  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedType, setSelectedType] = useState("");
+  const [selectedSubtype, setSelectedSubtype] = useState("");
+  const [selectedSubSubtype, setSelectedSubSubtype] = useState("");
+  const [formData, setFormData] = useState<Record<string, any>>({});
 
   const contentTypes = [
     {
       id: "augment-reality",
       name: "Augment Reality", 
       icon: Zap,
-      options: null,
-      description: "Create AR experiences"
+      subtypes: null
     },
     {
       id: "document",
       name: "Document",
       icon: FileText,
-      options: "4 options",
-      description: "Share documents and files"
+      subtypes: ["Any File", "Article Post", "Microsite", "PDF"]
     },
     {
       id: "restaurant-menu",
       name: "Restaurant Menu",
       icon: Utensils,
-      options: null,
-      description: "Digital menu experiences"
+      subtypes: null
     },
     {
       id: "game", 
       name: "Game",
       icon: Gamepad2,
-      options: null,
-      description: "Interactive gaming content"
+      subtypes: null
     },
     {
       id: "media",
       name: "Media",
       icon: Camera,
-      options: "2 options", 
-      description: "Photos, videos and media"
+      subtypes: ["Host", "Link"]
     },
     {
       id: "mobile-experience",
       name: "Mobile Experience",
       icon: Smartphone,
-      options: "2 options",
-      description: "Mobile-optimized content"
+      subtypes: ["Business card", "Channel"]
     },
     {
       id: "other",
       name: "Other",
       icon: Play,
-      options: "4 options",
-      description: "Custom content types"
+      subtypes: ["Data collector", "Point System", "Web Based", "Website URL"]
     },
     {
       id: "pay",
       name: "Pay", 
       icon: DollarSign,
-      options: "2 options",
-      description: "Payment and transactions"
+      subtypes: ["Payment machine", "Voucher Check"]
     },
     {
       id: "social-networks",
       name: "Social Networks",
       icon: Share2,
-      options: null,
-      description: "Social media integration"
+      subtypes: ["Facebook", "Instagram", "LinkedIn", "Pinterest", "TikTok", "X", "WhatsApp", "YouTube"]
     }
   ];
+
+  const mediaSubSubtypes = {
+    "Host": ["MP3", "Video"],
+    "Link": ["MP3", "Video", "Podcast"]
+  };
+
+  const socialNetworkIcons: Record<string, any> = {
+    "Facebook": Facebook,
+    "Instagram": Instagram,
+    "LinkedIn": Linkedin,
+    "Pinterest": Share2,
+    "TikTok": Share2,
+    "X": Share2,
+    "WhatsApp": Share2,
+    "YouTube": Play
+  };
+
+  const handleTypeChange = (typeId: string) => {
+    setSelectedType(typeId);
+    setSelectedSubtype("");
+    setSelectedSubSubtype("");
+    setFormData({});
+  };
+
+  const handleSubtypeChange = (subtype: string) => {
+    setSelectedSubtype(subtype);
+    setSelectedSubSubtype("");
+    setFormData({});
+  };
+
+  const handleSubSubtypeChange = (subSubtype: string) => {
+    setSelectedSubSubtype(subSubtype);
+    setFormData({});
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const renderFormFields = () => {
+    if (!selectedType) return null;
+
+    const type = contentTypes.find(t => t.id === selectedType);
+    if (!type) return null;
+
+    // Augment Reality
+    if (selectedType === "augment-reality") {
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="deeplink">Deeplink</Label>
+            <Input
+              id="deeplink"
+              placeholder="Deeplink"
+              value={formData.deeplink || ""}
+              onChange={(e) => handleInputChange("deeplink", e.target.value)}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // Restaurant Menu
+    if (selectedType === "restaurant-menu") {
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="menu-content">Menu Content</Label>
+            <Textarea
+              id="menu-content"
+              placeholder="Menu Content"
+              value={formData.menuContent || ""}
+              onChange={(e) => handleInputChange("menuContent", e.target.value)}
+              className="min-h-[120px]"
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // Game
+    if (selectedType === "game") {
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="game-pin">Sepo.io game PIN</Label>
+            <Input
+              id="game-pin"
+              placeholder="Sepo.io game PIN"
+              value={formData.gamePin || ""}
+              onChange={(e) => handleInputChange("gamePin", e.target.value)}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // Document subtypes
+    if (selectedType === "document" && selectedSubtype) {
+      if (selectedSubtype === "PDF") {
+        return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="pdf-file">File</Label>
+              <div className="flex items-center gap-2">
+                <Input
+                  id="pdf-file"
+                  type="file"
+                  accept=".pdf"
+                  onChange={(e) => handleInputChange("pdfFile", e.target.files?.[0]?.name || "")}
+                />
+                <Button variant="outline" size="sm">
+                  <Upload className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="content">Content</Label>
+              <Textarea
+                id="content"
+                placeholder="Content"
+                value={formData.content || ""}
+                onChange={(e) => handleInputChange("content", e.target.value)}
+                className="min-h-[120px]"
+              />
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // Media subtypes
+    if (selectedType === "media" && selectedSubtype && selectedSubSubtype) {
+      if (selectedSubtype === "Host") {
+        if (selectedSubSubtype === "MP3") {
+          return (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="audio-file">Audio file</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    id="audio-file"
+                    type="file"
+                    accept="audio/*"
+                    onChange={(e) => handleInputChange("audioFile", e.target.files?.[0]?.name || "")}
+                  />
+                  <Button variant="outline" size="sm">
+                    <Upload className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          );
+        } else if (selectedSubSubtype === "Video") {
+          return (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="video-file">Video file</Label>
+                <div className="flex items-center gap-2">
+                  <Input
+                    id="video-file"
+                    type="file"
+                    accept="video/*"
+                    onChange={(e) => handleInputChange("videoFile", e.target.files?.[0]?.name || "")}
+                  />
+                  <Button variant="outline" size="sm">
+                    <Upload className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          );
+        }
+      } else if (selectedSubtype === "Link") {
+        return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="url">Insert URL</Label>
+              <Input
+                id="url"
+                placeholder="Insert URL"
+                value={formData.url || ""}
+                onChange={(e) => handleInputChange("url", e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // Other subtypes
+    if (selectedType === "other" && selectedSubtype) {
+      if (selectedSubtype === "Web Based" || selectedSubtype === "Website URL") {
+        return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="url">Insert URL</Label>
+              <Input
+                id="url"
+                placeholder="Insert URL"
+                value={formData.url || ""}
+                onChange={(e) => handleInputChange("url", e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      } else {
+        return (
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="content">Content</Label>
+              <Textarea
+                id="content"
+                placeholder="Content"
+                value={formData.content || ""}
+                onChange={(e) => handleInputChange("content", e.target.value)}
+                className="min-h-[120px]"
+              />
+            </div>
+          </div>
+        );
+      }
+    }
+
+    // Social Networks
+    if (selectedType === "social-networks" && selectedSubtype) {
+      const IconComponent = socialNetworkIcons[selectedSubtype] || Share2;
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="social-url" className="flex items-center gap-2">
+              <IconComponent className="w-4 h-4" />
+              Insert URL
+            </Label>
+            <Input
+              id="social-url"
+              placeholder="Insert URL"
+              value={formData.socialUrl || ""}
+              onChange={(e) => handleInputChange("socialUrl", e.target.value)}
+            />
+          </div>
+        </div>
+      );
+    }
+
+    // Default case for other types with subtypes
+    if (selectedSubtype) {
+      return (
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="content">Content</Label>
+            <Textarea
+              id="content"
+              placeholder="Content"
+              value={formData.content || ""}
+              onChange={(e) => handleInputChange("content", e.target.value)}
+              className="min-h-[120px]"
+            />
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
+  const currentType = contentTypes.find(t => t.id === selectedType);
+  const showSubtypeSelector = currentType?.subtypes && selectedType;
+  const showSubSubtypeSelector = selectedType === "media" && selectedSubtype && mediaSubSubtypes[selectedSubtype as keyof typeof mediaSubSubtypes];
+  const showFormFields = selectedType && (!currentType?.subtypes || selectedSubtype) && (!showSubSubtypeSelector || selectedSubSubtype);
 
   return (
     <div className="min-h-screen bg-background">
@@ -109,13 +382,13 @@ const CreateQRCode = () => {
           </div>
 
           {/* Content Configuration Card */}
-          <Card className="w-full">
+          <Card className="w-full border border-black">
             <CardHeader className="pb-6">
               <CardTitle className="text-2xl">Content Configuration</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Step 1 Header */}
-              <div className="space-y-2">
+              {/* Step 1: Content Type */}
+              <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold">Step 1: Content Type</h3>
                   <Badge variant="secondary" className="text-xs">Required</Badge>
@@ -123,87 +396,108 @@ const CreateQRCode = () => {
                 <p className="text-sm text-muted-foreground">
                   Choose the primary type of content you want to create
                 </p>
-              </div>
 
-              {/* Content Type Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {contentTypes.map((type) => {
-                  const IconComponent = type.icon;
-                  return (
-                    <Button
-                      key={type.id}
-                      variant={selectedContentType === type.id ? "default" : "outline"}
-                      className={`h-auto p-4 justify-start text-left space-y-2 ${
-                        selectedContentType === type.id 
-                          ? "border-primary bg-primary text-primary-foreground" 
-                          : "border-border hover:border-primary/50 hover:bg-primary/5"
-                      }`}
-                      onClick={() => setSelectedContentType(type.id)}
-                    >
-                      <div className="w-full">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
+                {/* Content Type Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {contentTypes.map((type) => {
+                    const IconComponent = type.icon;
+                    return (
+                      <Button
+                        key={type.id}
+                        variant="outline"
+                        className={`h-auto p-4 justify-start text-left space-y-2 border-black ${
+                          selectedType === type.id 
+                            ? "bg-primary text-primary-foreground border-primary" 
+                            : "hover:bg-primary/5"
+                        }`}
+                        onClick={() => handleTypeChange(type.id)}
+                      >
+                        <div className="w-full">
+                          <div className="flex items-center gap-2 mb-2">
                             <IconComponent className="w-4 h-4" />
                             <span className="font-medium text-sm">{type.name}</span>
                           </div>
-                          {type.options && (
-                            <Badge 
-                              variant="secondary" 
-                              className={`text-xs ${
-                                selectedContentType === type.id 
-                                  ? "bg-primary-foreground/20 text-primary-foreground" 
-                                  : ""
-                              }`}
-                            >
-                              {type.options}
-                            </Badge>
-                          )}
                         </div>
-                        <p className={`text-xs ${
-                          selectedContentType === type.id 
-                            ? "text-primary-foreground/80" 
-                            : "text-muted-foreground"
-                        }`}>
-                          {type.description}
-                        </p>
-                      </div>
-                    </Button>
-                  );
-                })}
+                      </Button>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* Next Step Button */}
-              {selectedContentType && (
+              {/* Step 2: Subtype Selection */}
+              {showSubtypeSelector && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">Step 2: Subtype</h3>
+                    <Badge variant="secondary" className="text-xs">Required</Badge>
+                  </div>
+                  <Select value={selectedSubtype} onValueChange={handleSubtypeChange}>
+                    <SelectTrigger className="border-black">
+                      <SelectValue placeholder="Select subtype" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {currentType?.subtypes?.map((subtype) => (
+                        <SelectItem key={subtype} value={subtype}>
+                          {selectedType === "social-networks" ? (
+                            <div className="flex items-center gap-2">
+                              {React.createElement(socialNetworkIcons[subtype] || Share2, { className: "w-4 h-4" })}
+                              {subtype}
+                            </div>
+                          ) : (
+                            subtype
+                          )}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {/* Step 3: Sub-subtype Selection (for Media) */}
+              {showSubSubtypeSelector && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">Step 3: Media Type</h3>
+                    <Badge variant="secondary" className="text-xs">Required</Badge>
+                  </div>
+                  <Select value={selectedSubSubtype} onValueChange={handleSubSubtypeChange}>
+                    <SelectTrigger className="border-black">
+                      <SelectValue placeholder="Select media type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mediaSubSubtypes[selectedSubtype as keyof typeof mediaSubSubtypes]?.map((subSubtype) => (
+                        <SelectItem key={subSubtype} value={subSubtype}>
+                          {subSubtype}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+
+              {/* Form Fields */}
+              {showFormFields && (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-lg font-semibold">
+                      Step {showSubtypeSelector ? (showSubSubtypeSelector ? "4" : "3") : "2"}: Content Details
+                    </h3>
+                    <Badge variant="secondary" className="text-xs">Required</Badge>
+                  </div>
+                  {renderFormFields()}
+                </div>
+              )}
+
+              {/* Submit Button */}
+              {showFormFields && (
                 <div className="pt-4">
-                  <Button 
-                    size="lg" 
-                    className="w-full md:w-auto"
-                    onClick={() => setCurrentStep(2)}
-                  >
-                    Continue to Step 2
+                  <Button size="lg" className="w-full md:w-auto">
+                    Generate QR Code
                   </Button>
                 </div>
               )}
             </CardContent>
           </Card>
-
-          {/* Step 2 would go here when selectedContentType is set and currentStep is 2 */}
-          {currentStep === 2 && selectedContentType && (
-            <Card className="w-full mt-6">
-              <CardHeader>
-                <CardTitle className="text-2xl">Step 2: Configure Content</CardTitle>
-                <CardDescription>
-                  Set up the details for your {contentTypes.find(t => t.id === selectedContentType)?.name} content
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12 text-muted-foreground">
-                  <p>Content configuration options for {selectedContentType} will appear here...</p>
-                  <p className="text-sm mt-2">This step would contain specific form fields based on the selected content type.</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </section>
     </div>

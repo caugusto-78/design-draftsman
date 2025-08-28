@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import WireframePrivateAreaDemo from "./pages/WireframePrivateAreaDemo";
 import ImprovedDashboard from "./pages/ImprovedDashboard";
 import FirstTimeOnboarding from "./pages/FirstTimeOnboarding";
+import CreateQRCode from "./pages/CreateQRCode";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/dashboard" element={<Index />} />
           <Route path="/wireframe" element={<WireframePrivateAreaDemo />} />
           <Route path="/onboarding" element={<FirstTimeOnboarding />} />
+          <Route path="/create-qr" element={<CreateQRCode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

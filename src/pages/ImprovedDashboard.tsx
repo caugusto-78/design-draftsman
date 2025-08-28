@@ -5,8 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useNavigate } from "react-router-dom";
 import { QrCode, FolderOpen, BarChart3, Settings, Plus, Zap, Clock, Users, FileText, PlayCircle, ArrowRight, Star, TrendingUp, Home, Search, File, Link, Share2, Video, TreePine, Mail, Phone, MapPin, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 const ImprovedDashboard = () => {
+  const navigate = useNavigate();
   const [selectedWorkspace, setSelectedWorkspace] = useState("Meu Primeiro Workspace");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -208,7 +210,11 @@ const ImprovedDashboard = () => {
                 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center max-w-2xl mx-auto">
-                  <Button size="lg" className="h-auto p-4 lg:p-6 text-base lg:text-lg bg-black text-white hover:bg-black/80 flex-1 sm:flex-initial">
+                  <Button 
+                    size="lg" 
+                    className="h-auto p-4 lg:p-6 text-base lg:text-lg bg-black text-white hover:bg-black/80 flex-1 sm:flex-initial"
+                    onClick={() => navigate('/create-qr')}
+                  >
                     <div className="flex items-center gap-3 lg:gap-4">
                       <div className="w-10 h-10 lg:w-12 lg:h-12 bg-primary/20 rounded-xl flex items-center justify-center">
                         <QrCode className="w-6 h-6 lg:w-7 lg:h-7" />

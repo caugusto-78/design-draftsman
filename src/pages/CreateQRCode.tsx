@@ -1,111 +1,80 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, QrCode, ArrowLeft } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const CreateQRCode = () => {
   const navigate = useNavigate();
-  const [qrPurpose, setQrPurpose] = useState("");
-  const [qrData, setQrData] = useState({ url: "", text: "", email: "", phone: "", wifi: { ssid: "", password: "" } });
-  const [showQrCode, setShowQrCode] = useState(false);
+  const [selectedContentType, setSelectedContentType] = useState("");
+  const [currentStep, setCurrentStep] = useState(1);
 
-  const renderQrForm = () => {
-    switch (qrPurpose) {
-      case "url":
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="url">URL do Website</Label>
-              <Input 
-                id="url" 
-                placeholder="https://exemplo.com" 
-                value={qrData.url}
-                onChange={(e) => setQrData({ ...qrData, url: e.target.value })}
-              />
-            </div>
-          </div>
-        );
-      case "text":
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="text">Texto</Label>
-              <Textarea 
-                id="text" 
-                placeholder="Digite seu texto aqui..." 
-                value={qrData.text}
-                onChange={(e) => setQrData({ ...qrData, text: e.target.value })}
-              />
-            </div>
-          </div>
-        );
-      case "email":
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input 
-                id="email" 
-                type="email" 
-                placeholder="exemplo@email.com" 
-                value={qrData.email}
-                onChange={(e) => setQrData({ ...qrData, email: e.target.value })}
-              />
-            </div>
-          </div>
-        );
-      case "phone":
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="phone">Telefone</Label>
-              <Input 
-                id="phone" 
-                placeholder="+351 000 000 000" 
-                value={qrData.phone}
-                onChange={(e) => setQrData({ ...qrData, phone: e.target.value })}
-              />
-            </div>
-          </div>
-        );
-      case "wifi":
-        return (
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="ssid">Nome da Rede (SSID)</Label>
-              <Input 
-                id="ssid" 
-                placeholder="MinhaRede_WiFi" 
-                value={qrData.wifi.ssid}
-                onChange={(e) => setQrData({ ...qrData, wifi: { ...qrData.wifi, ssid: e.target.value } })}
-              />
-            </div>
-            <div>
-              <Label htmlFor="password">Password</Label>
-              <Input 
-                id="password" 
-                placeholder="password123" 
-                value={qrData.wifi.password}
-                onChange={(e) => setQrData({ ...qrData, wifi: { ...qrData.wifi, password: e.target.value } })}
-              />
-            </div>
-          </div>
-        );
-      default:
-        return null;
+  const contentTypes = [
+    {
+      id: "augment-reality",
+      name: "Augment Reality", 
+      icon: Zap,
+      options: null,
+      description: "Create AR experiences"
+    },
+    {
+      id: "document",
+      name: "Document",
+      icon: FileText,
+      options: "4 options",
+      description: "Share documents and files"
+    },
+    {
+      id: "restaurant-menu",
+      name: "Restaurant Menu",
+      icon: Utensils,
+      options: null,
+      description: "Digital menu experiences"
+    },
+    {
+      id: "game", 
+      name: "Game",
+      icon: Gamepad2,
+      options: null,
+      description: "Interactive gaming content"
+    },
+    {
+      id: "media",
+      name: "Media",
+      icon: Camera,
+      options: "2 options", 
+      description: "Photos, videos and media"
+    },
+    {
+      id: "mobile-experience",
+      name: "Mobile Experience",
+      icon: Smartphone,
+      options: "2 options",
+      description: "Mobile-optimized content"
+    },
+    {
+      id: "other",
+      name: "Other",
+      icon: Play,
+      options: "4 options",
+      description: "Custom content types"
+    },
+    {
+      id: "pay",
+      name: "Pay", 
+      icon: DollarSign,
+      options: "2 options",
+      description: "Payment and transactions"
+    },
+    {
+      id: "social-networks",
+      name: "Social Networks",
+      icon: Share2,
+      options: null,
+      description: "Social media integration"
     }
-  };
-
-  const handleCreateQr = () => {
-    if (qrPurpose && (qrData.url || qrData.text || qrData.email || qrData.phone || qrData.wifi.ssid)) {
-      setShowQrCode(true);
-    }
-  };
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -117,87 +86,124 @@ const CreateQRCode = () => {
               <ArrowLeft className="h-4 w-4 mr-2" />
               Voltar
             </Button>
-            <div className="flex items-center space-x-2">
-              <QrCode className="h-6 w-6 text-primary" />
-              <span className="text-lg font-semibold">Criar QR Code</span>
-            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <section className="py-12 bg-gradient-to-br from-primary/5 to-secondary/5">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Criar Novo QR Code
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Escolha o tipo de conteúdo e preencha as informações necessárias
+      <section className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                <FileText className="w-6 h-6 text-primary" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-primary">
+                Create New Content
+              </h1>
+            </div>
+            <p className="text-lg text-muted-foreground">
+              Build dynamic content with our intelligent form builder
             </p>
           </div>
 
-          {/* QR Creation Form */}
-          <div className="max-w-4xl mx-auto">
-            <Card className="p-8">
-              <div className="grid md:grid-cols-2 gap-8">
-                {/* Formulário */}
-                <div className="space-y-6">
-                  <div>
-                    <Label htmlFor="purpose">Tipo de Conteúdo</Label>
-                    <Select value={qrPurpose} onValueChange={setQrPurpose}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione o tipo de conteúdo" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="url">Website / Link</SelectItem>
-                        <SelectItem value="text">Texto Simples</SelectItem>
-                        <SelectItem value="email">Email</SelectItem>
-                        <SelectItem value="phone">Telefone</SelectItem>
-                        <SelectItem value="wifi">WiFi</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {renderQrForm()}
-
-                  {qrPurpose && (
-                    <Button 
-                      onClick={handleCreateQr} 
-                      className="w-full"
-                      size="lg"
-                    >
-                      Gerar QR Code <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  )}
+          {/* Content Configuration Card */}
+          <Card className="w-full">
+            <CardHeader className="pb-6">
+              <CardTitle className="text-2xl">Content Configuration</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Step 1 Header */}
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-semibold">Step 1: Content Type</h3>
+                  <Badge variant="secondary" className="text-xs">Required</Badge>
                 </div>
-
-                {/* Preview do QR Code */}
-                <div className="flex flex-col items-center justify-center">
-                  <div className="bg-secondary/20 w-64 h-64 rounded-lg flex items-center justify-center mb-6 border-2 border-dashed">
-                    {showQrCode ? (
-                      <QrCode className="h-40 w-40 text-primary" />
-                    ) : (
-                      <div className="text-center text-muted-foreground">
-                        <QrCode className="h-20 w-20 mx-auto mb-3 opacity-50" />
-                        <p className="text-sm">Seu QR Code aparecerá aqui</p>
-                      </div>
-                    )}
-                  </div>
-                  {showQrCode && (
-                    <div className="text-center space-y-3">
-                      <p className="text-sm font-medium text-primary">QR Code criado com sucesso!</p>
-                      <div className="flex flex-col gap-2">
-                        <Button size="sm" variant="outline">Baixar PNG</Button>
-                        <Button size="sm" variant="outline">Baixar SVG</Button>
-                        <Button size="sm" variant="outline">Copiar Link</Button>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <p className="text-sm text-muted-foreground">
+                  Choose the primary type of content you want to create
+                </p>
               </div>
+
+              {/* Content Type Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {contentTypes.map((type) => {
+                  const IconComponent = type.icon;
+                  return (
+                    <Button
+                      key={type.id}
+                      variant={selectedContentType === type.id ? "default" : "outline"}
+                      className={`h-auto p-4 justify-start text-left space-y-2 ${
+                        selectedContentType === type.id 
+                          ? "border-primary bg-primary text-primary-foreground" 
+                          : "border-border hover:border-primary/50 hover:bg-primary/5"
+                      }`}
+                      onClick={() => setSelectedContentType(type.id)}
+                    >
+                      <div className="w-full">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-2">
+                            <IconComponent className="w-4 h-4" />
+                            <span className="font-medium text-sm">{type.name}</span>
+                          </div>
+                          {type.options && (
+                            <Badge 
+                              variant="secondary" 
+                              className={`text-xs ${
+                                selectedContentType === type.id 
+                                  ? "bg-primary-foreground/20 text-primary-foreground" 
+                                  : ""
+                              }`}
+                            >
+                              {type.options}
+                            </Badge>
+                          )}
+                        </div>
+                        <p className={`text-xs ${
+                          selectedContentType === type.id 
+                            ? "text-primary-foreground/80" 
+                            : "text-muted-foreground"
+                        }`}>
+                          {type.description}
+                        </p>
+                      </div>
+                    </Button>
+                  );
+                })}
+              </div>
+
+              {/* Next Step Button */}
+              {selectedContentType && (
+                <div className="pt-4">
+                  <Button 
+                    size="lg" 
+                    className="w-full md:w-auto"
+                    onClick={() => setCurrentStep(2)}
+                  >
+                    Continue to Step 2
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Step 2 would go here when selectedContentType is set and currentStep is 2 */}
+          {currentStep === 2 && selectedContentType && (
+            <Card className="w-full mt-6">
+              <CardHeader>
+                <CardTitle className="text-2xl">Step 2: Configure Content</CardTitle>
+                <CardDescription>
+                  Set up the details for your {contentTypes.find(t => t.id === selectedContentType)?.name} content
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center py-12 text-muted-foreground">
+                  <p>Content configuration options for {selectedContentType} will appear here...</p>
+                  <p className="text-sm mt-2">This step would contain specific form fields based on the selected content type.</p>
+                </div>
+              </CardContent>
             </Card>
-          </div>
+          )}
         </div>
       </section>
     </div>

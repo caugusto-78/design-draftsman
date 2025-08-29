@@ -81,12 +81,15 @@ const ImprovedDashboard = () => {
   }];
   const workspaces = [{
     name: "Meu Primeiro Workspace",
+    initials: "MP",
     active: true
   }, {
     name: "Empresa XYZ",
+    initials: "EX",
     active: false
   }, {
     name: "Projeto Pessoal",
+    initials: "PP",
     active: false
   }];
   return <div className="min-h-screen bg-background flex flex-col lg:flex-row">
@@ -128,18 +131,37 @@ const ImprovedDashboard = () => {
           {!isSidebarCollapsed && <div className="hidden lg:block">
               <h3 className="text-sm font-medium text-muted-foreground mb-3">Workspaces</h3>
               <div className="space-y-1">
-                {workspaces.map((workspace, index) => <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-start gap-3 text-sm" size="sm">
-                    <FolderOpen className="w-4 h-4" />
+                {workspaces.map((workspace, index) => 
+                  <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-start gap-3 text-sm" size="sm">
+                    <div className="w-6 h-6 bg-muted rounded flex items-center justify-center text-xs font-bold">
+                      {workspace.initials}
+                    </div>
                     {workspace.name}
-                  </Button>)}
+                  </Button>
+                )}
+                {/* Add New Workspace Button */}
+                <Button variant="ghost" className="w-full justify-start gap-3 text-sm" size="sm">
+                  <div className="w-6 h-6 bg-muted rounded flex items-center justify-center">
+                    <Plus className="w-4 h-4" />
+                  </div>
+                  Novo Workspace
+                </Button>
               </div>
             </div>}
           
           {/* Collapsed Workspaces */}
           {isSidebarCollapsed && <div className="hidden lg:block space-y-1">
-              {workspaces.map((workspace, index) => <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-center" size="sm">
-                  <FolderOpen className="w-4 h-4" />
-                </Button>)}
+              {workspaces.map((workspace, index) => 
+                <Button key={index} variant={workspace.active ? "secondary" : "ghost"} className="w-full justify-center" size="sm">
+                  <div className="w-6 h-6 bg-muted rounded flex items-center justify-center text-xs font-bold">
+                    {workspace.initials}
+                  </div>
+                </Button>
+              )}
+              {/* Add New Workspace Button - Collapsed */}
+              <Button variant="ghost" className="w-full justify-center" size="sm">
+                <Plus className="w-4 h-4" />
+              </Button>
             </div>}
         </div>
       </div>

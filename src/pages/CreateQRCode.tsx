@@ -99,33 +99,63 @@ const CreateQRCode = () => {
   };
 
   const handleTypeChange = (typeId: string) => {
-    // Force animation reset for all subsequent sections
-    setSubtypeVisible(false);
-    setSubSubtypeVisible(false);
-    setFormFieldsVisible(false);
+    // Force animation reset for all subsequent sections with delay to ensure visibility
+    setSubtypeAnimating(true);
+    setSubSubtypeAnimating(true);
+    setFormFieldsAnimating(true);
     
-    setSelectedType(typeId);
-    setSelectedSubtype("");
-    setSelectedSubSubtype("");
-    setFormData({});
+    setTimeout(() => {
+      setSubtypeVisible(false);
+      setSubSubtypeVisible(false);
+      setFormFieldsVisible(false);
+      
+      setSelectedType(typeId);
+      setSelectedSubtype("");
+      setSelectedSubSubtype("");
+      setFormData({});
+      
+      setTimeout(() => {
+        setSubtypeAnimating(false);
+        setSubSubtypeAnimating(false);
+        setFormFieldsAnimating(false);
+      }, 100);
+    }, 50);
   };
 
   const handleSubtypeChange = (subtype: string) => {
-    // Force animation reset for subsequent sections
-    setSubSubtypeVisible(false);
-    setFormFieldsVisible(false);
+    // Force animation reset for subsequent sections with delay to ensure visibility
+    setSubSubtypeAnimating(true);
+    setFormFieldsAnimating(true);
     
-    setSelectedSubtype(subtype);
-    setSelectedSubSubtype("");
-    setFormData({});
+    setTimeout(() => {
+      setSubSubtypeVisible(false);
+      setFormFieldsVisible(false);
+      
+      setSelectedSubtype(subtype);
+      setSelectedSubSubtype("");
+      setFormData({});
+      
+      setTimeout(() => {
+        setSubSubtypeAnimating(false);
+        setFormFieldsAnimating(false);
+      }, 100);
+    }, 50);
   };
 
   const handleSubSubtypeChange = (subSubtype: string) => {
-    // Force animation reset for form fields
-    setFormFieldsVisible(false);
+    // Force animation reset for form fields with delay to ensure visibility
+    setFormFieldsAnimating(true);
     
-    setSelectedSubSubtype(subSubtype);
-    setFormData({});
+    setTimeout(() => {
+      setFormFieldsVisible(false);
+      
+      setSelectedSubSubtype(subSubtype);
+      setFormData({});
+      
+      setTimeout(() => {
+        setFormFieldsAnimating(false);
+      }, 100);
+    }, 50);
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -148,27 +178,27 @@ const CreateQRCode = () => {
       setAnimating(true);
       setTimeout(() => {
         setVisible(true);
-        setTimeout(() => setAnimating(false), 300);
-      }, 50);
+        setTimeout(() => setAnimating(false), 600);
+      }, 100);
     } else {
       if (setVisible === setSubtypeVisible && subtypeVisible) {
         setAnimating(true);
         setTimeout(() => {
           setVisible(false);
-          setTimeout(() => setAnimating(false), 300);
-        }, 50);
+          setTimeout(() => setAnimating(false), 600);
+        }, 100);
       } else if (setVisible === setSubSubtypeVisible && subSubtypeVisible) {
         setAnimating(true);
         setTimeout(() => {
           setVisible(false);
-          setTimeout(() => setAnimating(false), 300);
-        }, 50);
+          setTimeout(() => setAnimating(false), 600);
+        }, 100);
       } else if (setVisible === setFormFieldsVisible && formFieldsVisible) {
         setAnimating(true);
         setTimeout(() => {
           setVisible(false);
-          setTimeout(() => setAnimating(false), 300);
-        }, 50);
+          setTimeout(() => setAnimating(false), 600);
+        }, 100);
       }
     }
   };
@@ -521,7 +551,7 @@ const CreateQRCode = () => {
 
               {/* Step 2: Subtype Selection */}
               {showSubtypeSelector && (
-                <div className={`space-y-4 transition-all duration-300 ${
+                <div className={`space-y-4 transition-all duration-600 ${
                   subtypeVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : subtypeAnimating 
@@ -556,7 +586,7 @@ const CreateQRCode = () => {
 
               {/* Step 3: Sub-subtype Selection (for Media) */}
               {showSubSubtypeSelector && (
-                <div className={`space-y-4 transition-all duration-300 ${
+                <div className={`space-y-4 transition-all duration-600 ${
                   subSubtypeVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : subSubtypeAnimating 
@@ -584,7 +614,7 @@ const CreateQRCode = () => {
 
               {/* Form Fields */}
               {showFormFields && (
-                <div className={`space-y-4 transition-all duration-300 ${
+                <div className={`space-y-4 transition-all duration-600 ${
                   formFieldsVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : formFieldsAnimating 
@@ -603,7 +633,7 @@ const CreateQRCode = () => {
 
               {/* Submit Button */}
               {showFormFields && (
-                <div className={`pt-4 transition-all duration-300 ${
+                <div className={`pt-4 transition-all duration-600 ${
                   formFieldsVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : formFieldsAnimating 

@@ -99,6 +99,11 @@ const CreateQRCode = () => {
   };
 
   const handleTypeChange = (typeId: string) => {
+    // Force animation reset for all subsequent sections
+    setSubtypeVisible(false);
+    setSubSubtypeVisible(false);
+    setFormFieldsVisible(false);
+    
     setSelectedType(typeId);
     setSelectedSubtype("");
     setSelectedSubSubtype("");
@@ -106,12 +111,19 @@ const CreateQRCode = () => {
   };
 
   const handleSubtypeChange = (subtype: string) => {
+    // Force animation reset for subsequent sections
+    setSubSubtypeVisible(false);
+    setFormFieldsVisible(false);
+    
     setSelectedSubtype(subtype);
     setSelectedSubSubtype("");
     setFormData({});
   };
 
   const handleSubSubtypeChange = (subSubtype: string) => {
+    // Force animation reset for form fields
+    setFormFieldsVisible(false);
+    
     setSelectedSubSubtype(subSubtype);
     setFormData({});
   };

@@ -106,7 +106,7 @@ const ImprovedDashboard = () => {
               {isSidebarCollapsed ? <Menu className="w-4 h-4" /> : <X className="w-4 h-4" />}
             </Button>
             
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}`}>
               <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
                 <QrCode className="w-5 h-5 text-primary-foreground" />
               </div>

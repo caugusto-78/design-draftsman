@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,14 @@ const CreateQRCode = () => {
   const [selectedSubtype, setSelectedSubtype] = useState("");
   const [selectedSubSubtype, setSelectedSubSubtype] = useState("");
   const [formData, setFormData] = useState<Record<string, any>>({});
+  
+  // Animation states
+  const [subtypeVisible, setSubtypeVisible] = useState(false);
+  const [subtypeAnimating, setSubtypeAnimating] = useState(false);
+  const [subSubtypeVisible, setSubSubtypeVisible] = useState(false);
+  const [subSubtypeAnimating, setSubSubtypeAnimating] = useState(false);
+  const [formFieldsVisible, setFormFieldsVisible] = useState(false);
+  const [formFieldsAnimating, setFormFieldsAnimating] = useState(false);
 
   const contentTypes = [
     {
@@ -111,6 +119,86 @@ const CreateQRCode = () => {
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
+
+  // Variables for conditions
+  const currentType = contentTypes.find(t => t.id === selectedType);
+  const showSubtypeSelector = currentType?.subtypes && selectedType;
+  const showSubSubtypeSelector = selectedType === "media" && selectedSubtype && mediaSubSubtypes[selectedSubtype as keyof typeof mediaSubSubtypes];
+  const showFormFields = selectedType && (!currentType?.subtypes || selectedSubtype) && (!showSubSubtypeSelector || selectedSubSubtype);
+
+  // Animation functions
+  const animateSection = (
+    setVisible: (value: boolean) => void,
+    setAnimating: (value: boolean) => void,
+    shouldShow: boolean
+  ) => {
+    if (shouldShow) {
+      setAnimating(true);
+      setTimeout(() => {
+        setVisible(true);
+        setTimeout(() => setAnimating(false), 300);
+      }, 50);
+    } else {
+      if (setVisible === setSubtypeVisible && subtypeVisible) {
+        setAnimating(true);
+        setTimeout(() => {
+          setVisible(false);
+          setTimeout(() => setAnimating(false), 300);
+        }, 50);
+      } else if (setVisible === setSubSubtypeVisible && subSubtypeVisible) {
+        setAnimating(true);
+        setTimeout(() => {
+          setVisible(false);
+          setTimeout(() => setAnimating(false), 300);
+        }, 50);
+      } else if (setVisible === setFormFieldsVisible && formFieldsVisible) {
+        setAnimating(true);
+        setTimeout(() => {
+          setVisible(false);
+          setTimeout(() => setAnimating(false), 300);
+        }, 50);
+      }
+    }
+  };
+
+  // Effect for subtype section animation
+  useEffect(() => {
+    const shouldShowSubtype = !!(currentType?.subtypes && selectedType);
+    
+    if (shouldShowSubtype && !subtypeVisible) {
+      // Show with slide down
+      animateSection(setSubtypeVisible, setSubtypeAnimating, true);
+    } else if (!shouldShowSubtype && subtypeVisible) {
+      // Hide with slide up
+      animateSection(setSubtypeVisible, setSubtypeAnimating, false);
+    }
+  }, [selectedType, currentType?.subtypes, subtypeVisible]);
+
+  // Effect for sub-subtype section animation
+  useEffect(() => {
+    const shouldShowSubSubtype = !!(selectedType === "media" && selectedSubtype && mediaSubSubtypes[selectedSubtype as keyof typeof mediaSubSubtypes]);
+    
+    if (shouldShowSubSubtype && !subSubtypeVisible) {
+      // Show with slide down
+      animateSection(setSubSubtypeVisible, setSubSubtypeAnimating, true);
+    } else if (!shouldShowSubSubtype && subSubtypeVisible) {
+      // Hide with slide up  
+      animateSection(setSubSubtypeVisible, setSubSubtypeAnimating, false);
+    }
+  }, [selectedType, selectedSubtype, subSubtypeVisible]);
+
+  // Effect for form fields section animation
+  useEffect(() => {
+    const shouldShowFormFields = !!(selectedType && (!currentType?.subtypes || selectedSubtype) && (!showSubSubtypeSelector || selectedSubSubtype));
+    
+    if (shouldShowFormFields && !formFieldsVisible) {
+      // Show with slide down
+      animateSection(setFormFieldsVisible, setFormFieldsAnimating, true);
+    } else if (!shouldShowFormFields && formFieldsVisible) {
+      // Hide with slide up
+      animateSection(setFormFieldsVisible, setFormFieldsAnimating, false);
+    }
+  }, [selectedType, selectedSubtype, selectedSubSubtype, currentType?.subtypes, showSubSubtypeSelector, formFieldsVisible]);
 
   const renderFormFields = () => {
     if (!selectedType) return null;
@@ -344,11 +432,6 @@ const CreateQRCode = () => {
     return null;
   };
 
-  const currentType = contentTypes.find(t => t.id === selectedType);
-  const showSubtypeSelector = currentType?.subtypes && selectedType;
-  const showSubSubtypeSelector = selectedType === "media" && selectedSubtype && mediaSubSubtypes[selectedSubtype as keyof typeof mediaSubSubtypes];
-  const showFormFields = selectedType && (!currentType?.subtypes || selectedSubtype) && (!showSubSubtypeSelector || selectedSubSubtype);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -426,7 +509,13 @@ const CreateQRCode = () => {
 
               {/* Step 2: Subtype Selection */}
               {showSubtypeSelector && (
-                <div className="space-y-4">
+                <div className={`space-y-4 transition-all duration-300 ${
+                  subtypeVisible 
+                    ? 'animate-fade-in translate-y-0 opacity-100' 
+                    : subtypeAnimating 
+                      ? 'animate-fade-out -translate-y-2 opacity-0' 
+                      : 'translate-y-2 opacity-0'
+                }`}>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-semibold">Step 2: Subtype</h3>
                     <Badge variant="secondary" className="text-xs">Required</Badge>
@@ -455,7 +544,13 @@ const CreateQRCode = () => {
 
               {/* Step 3: Sub-subtype Selection (for Media) */}
               {showSubSubtypeSelector && (
-                <div className="space-y-4">
+                <div className={`space-y-4 transition-all duration-300 ${
+                  subSubtypeVisible 
+                    ? 'animate-fade-in translate-y-0 opacity-100' 
+                    : subSubtypeAnimating 
+                      ? 'animate-fade-out -translate-y-2 opacity-0' 
+                      : 'translate-y-2 opacity-0'
+                }`}>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-semibold">Step 3: Media Type</h3>
                     <Badge variant="secondary" className="text-xs">Required</Badge>
@@ -477,7 +572,13 @@ const CreateQRCode = () => {
 
               {/* Form Fields */}
               {showFormFields && (
-                <div className="space-y-4">
+                <div className={`space-y-4 transition-all duration-300 ${
+                  formFieldsVisible 
+                    ? 'animate-fade-in translate-y-0 opacity-100' 
+                    : formFieldsAnimating 
+                      ? 'animate-fade-out -translate-y-2 opacity-0' 
+                      : 'translate-y-2 opacity-0'
+                }`}>
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-semibold">
                       Step {showSubtypeSelector ? (showSubSubtypeSelector ? "4" : "3") : "2"}: Content Details
@@ -490,7 +591,13 @@ const CreateQRCode = () => {
 
               {/* Submit Button */}
               {showFormFields && (
-                <div className="pt-4">
+                <div className={`pt-4 transition-all duration-300 ${
+                  formFieldsVisible 
+                    ? 'animate-fade-in translate-y-0 opacity-100' 
+                    : formFieldsAnimating 
+                      ? 'animate-fade-out -translate-y-2 opacity-0' 
+                      : 'translate-y-2 opacity-0'
+                }`}>
                   <Button size="lg" className="w-full md:w-auto">
                     Generate QR Code
                   </Button>

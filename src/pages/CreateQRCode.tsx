@@ -123,6 +123,13 @@ const CreateQRCode = () => {
       setSelectedSubSubtype("");
       setFormData({});
       
+      // Clear QR code and advanced options
+      setQrCodeGenerated(false);
+      setQrCodeDataUrl("");
+      setQrCodeGenerating(false);
+      setShortlink("");
+      setActiveAccordionItem("");
+      
       setTimeout(() => {
         setSubtypeAnimating(false);
         setSubSubtypeAnimating(false);
@@ -145,6 +152,13 @@ const CreateQRCode = () => {
       setSelectedSubSubtype("");
       setFormData({});
       
+      // Clear QR code and advanced options
+      setQrCodeGenerated(false);
+      setQrCodeDataUrl("");
+      setQrCodeGenerating(false);
+      setShortlink("");
+      setActiveAccordionItem("");
+      
       setTimeout(() => {
         setSubSubtypeAnimating(false);
         setFormFieldsAnimating(false);
@@ -162,6 +176,13 @@ const CreateQRCode = () => {
       
       setSelectedSubSubtype(subSubtype);
       setFormData({});
+      
+      // Clear QR code and advanced options
+      setQrCodeGenerated(false);
+      setQrCodeDataUrl("");
+      setQrCodeGenerating(false);
+      setShortlink("");
+      setActiveAccordionItem("");
       
       setTimeout(() => {
         setFormFieldsAnimating(false);
@@ -187,6 +208,15 @@ const CreateQRCode = () => {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    
+    // Clear QR code and advanced options when form data changes
+    if (qrCodeGenerated) {
+      setQrCodeGenerated(false);
+      setQrCodeDataUrl("");
+      setQrCodeGenerating(false);
+      setShortlink("");
+      setActiveAccordionItem("");
+    }
   };
 
   const generateQRCode = async () => {
@@ -737,13 +767,7 @@ const CreateQRCode = () => {
               {/* Loading Animation */}
               {qrCodeGenerating && (
                 <div className="pt-6 animate-fade-in flex flex-col items-center space-y-4">
-                  <div className="animate-spin">
-                    <div className="w-8 h-8 border-2 border-muted border-t-primary rounded-sm animate-pulse">
-                      <div className="w-1 h-1 bg-primary m-1 animate-pulse"></div>
-                      <div className="w-1 h-1 bg-primary m-1 animate-pulse delay-100"></div>
-                      <div className="w-1 h-1 bg-primary m-1 animate-pulse delay-200"></div>
-                    </div>
-                  </div>
+                  <Loader2 className="w-8 h-8 animate-spin text-primary" />
                   <p className="text-sm text-muted-foreground">Generating QR Code...</p>
                 </div>
               )}

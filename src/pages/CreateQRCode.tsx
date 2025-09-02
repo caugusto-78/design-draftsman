@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap, Facebook, Instagram, Linkedin, Upload } from "lucide-react";
+import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap, Facebook, Instagram, Linkedin, Upload, Settings, ChevronDown, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import * as React from "react";
 import QRCode from "qrcode";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const CreateQRCode = () => {
   const navigate = useNavigate();
@@ -19,6 +20,11 @@ const CreateQRCode = () => {
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
   const [qrCodeDataUrl, setQrCodeDataUrl] = useState("");
+  const [qrCodeGenerating, setQrCodeGenerating] = useState(false);
+  const [shortlink, setShortlink] = useState("");
+  
+  // Advanced options state
+  const [activeAccordionItem, setActiveAccordionItem] = useState("");
   
   // Animation states
   const [subtypeVisible, setSubtypeVisible] = useState(false);
@@ -121,6 +127,7 @@ const CreateQRCode = () => {
         setSubtypeAnimating(false);
         setSubSubtypeAnimating(false);
         setFormFieldsAnimating(false);
+        scrollToActiveStep();
       }, 100);
     }, 50);
   };
@@ -141,6 +148,7 @@ const CreateQRCode = () => {
       setTimeout(() => {
         setSubSubtypeAnimating(false);
         setFormFieldsAnimating(false);
+        scrollToActiveStep();
       }, 100);
     }, 50);
   };
@@ -157,8 +165,24 @@ const CreateQRCode = () => {
       
       setTimeout(() => {
         setFormFieldsAnimating(false);
+        scrollToActiveStep();
       }, 100);
     }, 50);
+  };
+
+  const handleAccordionChange = (value: string) => {
+    const currentValue = activeAccordionItem === value ? "" : value;
+    setActiveAccordionItem(currentValue);
+    
+    // Scroll to opened accordion after animation
+    if (currentValue) {
+      setTimeout(() => {
+        const accordionElement = document.getElementById(`accordion-${value}`);
+        if (accordionElement) {
+          accordionElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -167,11 +191,17 @@ const CreateQRCode = () => {
 
   const generateQRCode = async () => {
     try {
+      setQrCodeGenerating(true);
+      
       // Generate demo shortlink
-      const shortlink = `https://qr.demo/${Math.random().toString(36).substring(2, 8)}`;
+      const demoShortlink = `https://qr.demo/${Math.random().toString(36).substring(2, 8)}`;
+      setShortlink(demoShortlink);
+      
+      // 2 second delay with loading animation
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Generate QR code
-      const qrDataUrl = await QRCode.toDataURL(shortlink, {
+      const qrDataUrl = await QRCode.toDataURL(demoShortlink, {
         width: 200,
         margin: 2,
         color: {
@@ -181,10 +211,43 @@ const CreateQRCode = () => {
       });
       
       setQrCodeDataUrl(qrDataUrl);
+      setQrCodeGenerating(false);
       setQrCodeGenerated(true);
+      
+      // Scroll to QR code after generation
+      setTimeout(() => {
+        const qrSection = document.getElementById('qr-code-section');
+        if (qrSection) {
+          qrSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
     } catch (error) {
       console.error('Error generating QR code:', error);
+      setQrCodeGenerating(false);
     }
+  };
+
+  const scrollToActiveStep = () => {
+    setTimeout(() => {
+      let activeElementId = '';
+      
+      if (showFormFields) {
+        activeElementId = 'form-fields-section';
+      } else if (showSubSubtypeSelector) {
+        activeElementId = 'sub-subtype-section';
+      } else if (showSubtypeSelector) {
+        activeElementId = 'subtype-section';
+      } else if (selectedType) {
+        activeElementId = 'type-section';
+      }
+      
+      if (activeElementId) {
+        const element = document.getElementById(activeElementId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }, 700); // Wait for animation to complete
   };
 
   // Variables for conditions
@@ -538,7 +601,7 @@ const CreateQRCode = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Step 1: Content Type */}
-              <div className="space-y-4">
+              <div id="type-section" className="space-y-4">
                 <div className="flex items-center gap-2">
                   <h3 className="text-lg font-semibold">Step 1: Content Type</h3>
                   <Badge variant="secondary" className="text-xs">Required</Badge>
@@ -576,7 +639,7 @@ const CreateQRCode = () => {
 
               {/* Step 2: Subtype Selection */}
               {showSubtypeSelector && (
-                <div className={`space-y-4 transition-all duration-600 ${
+                <div id="subtype-section" className={`space-y-4 transition-all duration-600 ${
                   subtypeVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : subtypeAnimating 
@@ -611,7 +674,7 @@ const CreateQRCode = () => {
 
               {/* Step 3: Sub-subtype Selection (for Media) */}
               {showSubSubtypeSelector && (
-                <div className={`space-y-4 transition-all duration-600 ${
+                <div id="sub-subtype-section" className={`space-y-4 transition-all duration-600 ${
                   subSubtypeVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : subSubtypeAnimating 
@@ -639,7 +702,7 @@ const CreateQRCode = () => {
 
               {/* Form Fields */}
               {showFormFields && (
-                <div className={`space-y-4 transition-all duration-600 ${
+                <div id="form-fields-section" className={`space-y-4 transition-all duration-600 ${
                   formFieldsVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
                     : formFieldsAnimating 
@@ -657,7 +720,7 @@ const CreateQRCode = () => {
               )}
 
               {/* Submit Button */}
-              {showFormFields && !qrCodeGenerated && (
+              {showFormFields && !qrCodeGenerated && !qrCodeGenerating && (
                 <div className={`pt-4 transition-all duration-600 ${
                   formFieldsVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
@@ -671,10 +734,24 @@ const CreateQRCode = () => {
                 </div>
               )}
 
+              {/* Loading Animation */}
+              {qrCodeGenerating && (
+                <div className="pt-6 animate-fade-in flex flex-col items-center space-y-4">
+                  <div className="animate-spin">
+                    <div className="w-8 h-8 border-2 border-muted border-t-primary rounded-sm animate-pulse">
+                      <div className="w-1 h-1 bg-primary m-1 animate-pulse"></div>
+                      <div className="w-1 h-1 bg-primary m-1 animate-pulse delay-100"></div>
+                      <div className="w-1 h-1 bg-primary m-1 animate-pulse delay-200"></div>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Generating QR Code...</p>
+                </div>
+              )}
+
               {/* Generated QR Code */}
               {qrCodeGenerated && (
-                <div className="pt-6 animate-fade-in">
-                  <div className="flex flex-col items-center space-y-4">
+                <div id="qr-code-section" className="pt-6 animate-fade-in">
+                  <div className="flex flex-col items-center space-y-6">
                     <div className="bg-white p-4 rounded-lg shadow-lg">
                       <img 
                         src={qrCodeDataUrl} 
@@ -683,8 +760,165 @@ const CreateQRCode = () => {
                       />
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      https://qr.demo/{Math.random().toString(36).substring(2, 8)}
+                      {shortlink}
                     </p>
+                    <Button variant="outline" size="sm" className="flex items-center gap-2">
+                      <Settings className="w-4 h-4" />
+                      Edit QR Code Style
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {/* Advanced Options Section */}
+              {qrCodeGenerated && (
+                <div className="pt-12 animate-fade-in">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-lg font-semibold">Advanced Options</h3>
+                      <Badge variant="outline" className="text-xs">Optional</Badge>
+                    </div>
+                    
+                    <Accordion 
+                      type="single" 
+                      value={activeAccordionItem} 
+                      onValueChange={handleAccordionChange}
+                      className="w-full space-y-2"
+                    >
+                      <AccordionItem value="content-cover" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-content-cover"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Content Cover
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="content-cover-input">Cover Content</Label>
+                            <Input
+                              id="content-cover-input"
+                              placeholder="Enter cover content..."
+                              className="w-full"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="geolocation" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-geolocation"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Geolocalization Content Trigger
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="geolocation-input">Geolocation Settings</Label>
+                            <Input
+                              id="geolocation-input"
+                              placeholder="Enter geolocation settings..."
+                              className="w-full"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="related-links" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-related-links"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Related Links
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="related-links-input">Related Links</Label>
+                            <Input
+                              id="related-links-input"
+                              placeholder="Enter related links..."
+                              className="w-full"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="properties" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-properties"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Properties
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="properties-input">Properties</Label>
+                            <Input
+                              id="properties-input"
+                              placeholder="Enter properties..."
+                              className="w-full"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="lead-capture" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-lead-capture"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Lead Capture Form
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="lead-capture-input">Lead Capture Settings</Label>
+                            <Input
+                              id="lead-capture-input"
+                              placeholder="Enter lead capture settings..."
+                              className="w-full"
+                            />
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="conditions" className="border border-border rounded-lg">
+                        <AccordionTrigger 
+                          id="accordion-conditions"
+                          className="px-4 py-3 hover:no-underline hover:bg-muted/50"
+                        >
+                          Apply Conditions
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 pb-4">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <Label htmlFor="condition-select">Choose a condition</Label>
+                              <Select>
+                                <SelectTrigger id="condition-select">
+                                  <SelectValue placeholder="Select condition" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="condition1">Condição 1</SelectItem>
+                                  <SelectItem value="condition2">Condição 2</SelectItem>
+                                  <SelectItem value="new">+ nova condição</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="content-select">Content</Label>
+                              <Select>
+                                <SelectTrigger id="content-select">
+                                  <SelectValue placeholder="Select content" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="content1">Content 1</SelectItem>
+                                  <SelectItem value="content2">Content 2</SelectItem>
+                                  <SelectItem value="content3">Content 3</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </div>
                 </div>
               )}

@@ -65,7 +65,7 @@ const HeroSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Button 
               size="lg" 
-              className="h-auto p-6 bg-foreground text-background hover:bg-foreground/90 flex-col items-start text-left space-y-2 min-w-[200px]"
+              className="h-auto p-6 bg-foreground text-background hover:bg-foreground/90 flex flex-col items-start text-left space-y-2 min-w-[200px]"
               onClick={() => navigate('/create-qr')}
             >
               <div className="flex items-center gap-3 w-full">
@@ -74,7 +74,9 @@ const HeroSection = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-lg whitespace-nowrap">Criar QR Code</div>
-                  <div className="text-sm opacity-90">Comece a criar o seu primeiro QR Code</div>
+                  <div className="text-sm opacity-90 break-words">
+                    Comece a criar o seu conteúdo
+                  </div>
                 </div>
               </div>
             </Button>
@@ -82,7 +84,7 @@ const HeroSection = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="h-auto p-6 border-foreground bg-transparent hover:bg-muted/50 flex-col items-start text-left space-y-2 min-w-[200px]"
+              className="h-auto p-6 border-foreground bg-transparent hover:bg-muted/50 flex flex-col items-start text-left space-y-2 min-w-[200px]"
             >
               <div className="flex items-center gap-3 w-full">
                 <div className="w-8 h-8 bg-muted rounded flex items-center justify-center">
@@ -90,7 +92,9 @@ const HeroSection = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-lg text-foreground whitespace-nowrap">Novo Workspace</div>
-                  <div className="text-sm text-muted-foreground">Organize os seus projetos por categorias</div>
+                  <div className="text-sm text-muted-foreground break-words">
+                    Organize os seus projetos por categorias
+                  </div>
                 </div>
               </div>
             </Button>

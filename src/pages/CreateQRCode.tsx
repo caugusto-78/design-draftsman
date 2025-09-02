@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, FileText, Camera, Utensils, Gamepad2, Play, Smartphone, DollarSign, Share2, Zap, Facebook, Instagram, Linkedin, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import * as React from "react";
+import QRCode from "qrcode";
 
 const CreateQRCode = () => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ const CreateQRCode = () => {
   const [selectedSubtype, setSelectedSubtype] = useState("");
   const [selectedSubSubtype, setSelectedSubSubtype] = useState("");
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [qrCodeGenerated, setQrCodeGenerated] = useState(false);
+  const [qrCodeDataUrl, setQrCodeDataUrl] = useState("");
   
   // Animation states
   const [subtypeVisible, setSubtypeVisible] = useState(false);
@@ -160,6 +163,28 @@ const CreateQRCode = () => {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const generateQRCode = async () => {
+    try {
+      // Generate demo shortlink
+      const shortlink = `https://qr.demo/${Math.random().toString(36).substring(2, 8)}`;
+      
+      // Generate QR code
+      const qrDataUrl = await QRCode.toDataURL(shortlink, {
+        width: 200,
+        margin: 2,
+        color: {
+          dark: '#000000',
+          light: '#FFFFFF'
+        }
+      });
+      
+      setQrCodeDataUrl(qrDataUrl);
+      setQrCodeGenerated(true);
+    } catch (error) {
+      console.error('Error generating QR code:', error);
+    }
   };
 
   // Variables for conditions
@@ -632,7 +657,7 @@ const CreateQRCode = () => {
               )}
 
               {/* Submit Button */}
-              {showFormFields && (
+              {showFormFields && !qrCodeGenerated && (
                 <div className={`pt-4 transition-all duration-600 ${
                   formFieldsVisible 
                     ? 'animate-fade-in translate-y-0 opacity-100' 
@@ -640,9 +665,27 @@ const CreateQRCode = () => {
                       ? 'animate-fade-out -translate-y-2 opacity-0' 
                       : 'translate-y-2 opacity-0'
                 }`}>
-                  <Button size="lg" className="w-full md:w-auto">
+                  <Button size="lg" className="w-full md:w-auto" onClick={generateQRCode}>
                     Generate QR Code
                   </Button>
+                </div>
+              )}
+
+              {/* Generated QR Code */}
+              {qrCodeGenerated && (
+                <div className="pt-6 animate-fade-in">
+                  <div className="flex flex-col items-center space-y-4">
+                    <div className="bg-white p-4 rounded-lg shadow-lg">
+                      <img 
+                        src={qrCodeDataUrl} 
+                        alt="Generated QR Code" 
+                        className="w-48 h-48"
+                      />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      https://qr.demo/{Math.random().toString(36).substring(2, 8)}
+                    </p>
+                  </div>
                 </div>
               )}
             </CardContent>

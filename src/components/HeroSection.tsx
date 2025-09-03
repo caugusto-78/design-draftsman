@@ -65,16 +65,16 @@ const HeroSection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Button 
               size="lg" 
-              className="h-auto p-6 bg-foreground text-background hover:bg-foreground/90 flex flex-col items-start text-left space-y-2 min-w-[200px]"
+              className="h-auto p-6 bg-foreground text-background hover:bg-foreground/90 flex flex-col items-start text-left space-y-2 w-full"
               onClick={() => navigate('/create-qr')}
             >
               <div className="flex items-center gap-3 w-full">
-                <div className="w-8 h-8 bg-background/20 rounded flex items-center justify-center">
+                <div className="w-8 h-8 bg-background/20 rounded flex items-center justify-center flex-shrink-0">
                   <QrCode className="w-5 h-5" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-bold text-lg whitespace-nowrap">Criar QR Code</div>
-                  <div className="text-sm opacity-90 break-words">
+                  <div className="font-bold text-lg text-left">Criar QR Code</div>
+                  <div className="text-sm opacity-90 text-left leading-relaxed">
                     Comece a criar o seu conteúdo
                   </div>
                 </div>
@@ -84,15 +84,15 @@ const HeroSection = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="h-auto p-6 border-foreground bg-transparent hover:bg-muted/50 flex flex-col items-start text-left space-y-2 min-w-[200px]"
+              className="h-auto p-6 border-foreground bg-transparent hover:bg-muted/50 flex flex-col items-start text-left space-y-2 w-full"
             >
               <div className="flex items-center gap-3 w-full">
-                <div className="w-8 h-8 bg-muted rounded flex items-center justify-center">
+                <div className="w-8 h-8 bg-muted rounded flex items-center justify-center flex-shrink-0">
                   <FolderOpen className="w-5 h-5 text-foreground" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-bold text-lg text-foreground whitespace-nowrap">Novo Workspace</div>
-                  <div className="text-sm text-muted-foreground break-words">
+                  <div className="font-bold text-lg text-foreground text-left">Novo Workspace</div>
+                  <div className="text-sm text-muted-foreground text-left leading-relaxed">
                     Organize os seus projetos por categorias
                   </div>
                 </div>

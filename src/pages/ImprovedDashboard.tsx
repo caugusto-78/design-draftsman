@@ -11,7 +11,7 @@ import HeroSection from "@/components/HeroSection";
 const ImprovedDashboard = () => {
   const navigate = useNavigate();
   const [selectedWorkspace, setSelectedWorkspace] = useState("Meu Primeiro Workspace");
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
 
   // Dados simulados
   const stats = {
@@ -173,13 +173,19 @@ const ImprovedDashboard = () => {
         <div className="border-b bg-muted/30">
           <div className="px-4 lg:px-6 py-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div>
-                <h1 className="text-xl lg:text-2xl font-bold text-foreground">Olá, João! 👋</h1>
-                <p className="text-sm lg:text-base text-muted-foreground">Bem-vindo de volta ao seu dashboard MiMeCode</p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                  <div className="w-6 h-6 bg-muted-foreground/30 rounded-full flex items-center justify-center">
+                    <div className="w-4 h-4 bg-muted-foreground/50 rounded-full"></div>
+                  </div>
+                </div>
+                <div>
+                  <h1 className="text-xl lg:text-2xl font-bold text-foreground">Olá, João!</h1>
+                  <p className="text-sm lg:text-base text-muted-foreground">Bem-vindo de volta ao seu dashboard MiMeCode</p>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                  <Zap className="w-3 h-3 mr-1" />
                   {stats.daysLeft} dias de trial
                 </Badge>
               </div>

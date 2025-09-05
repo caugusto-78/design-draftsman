@@ -26,38 +26,6 @@ const OnboardingStep1 = ({ onNext }: OnboardingStep1Props) => {
             </p>
           </div>
 
-          {/* Benefícios do Onboarding */}
-          <div className="space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Sparkles className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Configuração Personalizada</h3>
-                <p className="text-sm text-muted-foreground">Adaptamos a plataforma às suas necessidades específicas</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Target className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Foco no Seu Negócio</h3>
-                <p className="text-sm text-muted-foreground">Recomendações baseadas no seu sector de atividade</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Zap className="h-4 w-4 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold">Início Rápido</h3>
-                <p className="text-sm text-muted-foreground">Comece a criar em menos de 3 minutos</p>
-              </div>
-            </div>
-          </div>
 
           {/* Progresso Visual */}
           <div className="bg-card rounded-lg p-6 border">
@@ -101,27 +69,6 @@ const OnboardingStep1 = ({ onNext }: OnboardingStep1Props) => {
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <h4 className="font-medium text-sm">O que vai acontecer:</h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span className="text-muted-foreground">Escolher o seu segmento de negócio</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span className="text-muted-foreground">Definir os seus objetivos principais</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span className="text-muted-foreground">Configurar preferências básicas</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span className="text-muted-foreground">Conhecer as funcionalidades principais</span>
-                  </div>
-                </div>
-              </div>
 
               <Button onClick={onNext} className="w-full" size="lg">
                 Iniciar Configuração

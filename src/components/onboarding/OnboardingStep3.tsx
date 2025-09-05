@@ -17,42 +17,42 @@ const OnboardingStep3 = ({ onNext, onBack }: OnboardingStep3Props) => {
       name: "Aumentar Vendas",
       description: "Converter mais visitantes em clientes",
       icon: TrendingUp,
-      color: "text-green-600 bg-green-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "brand_awareness",
       name: "Notoriedade da Marca",
       description: "Dar a conhecer a marca e produtos",
       icon: Globe,
-      color: "text-blue-600 bg-blue-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "customer_engagement",
       name: "Envolvimento do Cliente",
       description: "Criar experiências interativas",
       icon: Users,
-      color: "text-purple-600 bg-purple-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "lead_generation",
       name: "Geração de Leads",
       description: "Captar contactos qualificados",
       icon: Target,
-      color: "text-orange-600 bg-orange-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "social_sharing",
       name: "Partilha Social",
       description: "Aumentar presença nas redes sociais",
       icon: Share2,
-      color: "text-pink-600 bg-pink-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "analytics",
       name: "Análise de Dados",
       description: "Medir e otimizar campanhas",
       icon: BarChart,
-      color: "text-indigo-600 bg-indigo-50"
+      color: "text-black bg-gray-50"
     }
   ];
 
@@ -83,41 +83,6 @@ const OnboardingStep3 = ({ onNext, onBack }: OnboardingStep3Props) => {
             </p>
           </div>
 
-          {/* Benefícios por Objetivo */}
-          <div className="space-y-6">
-            <h3 className="font-semibold text-lg">Como vamos ajudar:</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <TrendingUp className="h-4 w-4 text-green-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Aumentar Vendas</h4>
-                  <p className="text-sm text-muted-foreground">QR codes para ofertas especiais, descontos e call-to-actions diretas</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Users className="h-4 w-4 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Envolvimento</h4>
-                  <p className="text-sm text-muted-foreground">Experiências interativas, jogos e conteúdos exclusivos</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <BarChart className="h-4 w-4 text-indigo-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Analytics Avançadas</h4>
-                  <p className="text-sm text-muted-foreground">Relatórios detalhados sobre scans, conversões e ROI</p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Progresso */}
           <div className="bg-card rounded-lg p-6 border">

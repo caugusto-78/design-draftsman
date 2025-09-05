@@ -17,56 +17,56 @@ const OnboardingStep2 = ({ onNext, onBack }: OnboardingStep2Props) => {
       name: "Retalho & Comércio",
       description: "Lojas físicas, e-commerce, produtos",
       icon: Store,
-      color: "text-blue-600 bg-blue-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "services",
       name: "Serviços Profissionais",
       description: "Consultoria, advocacia, contabilidade",
       icon: Briefcase,
-      color: "text-green-600 bg-green-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "hospitality",
       name: "Hotelaria & Restauração",
       description: "Hotéis, restaurantes, bares, cafés",
       icon: Utensils,
-      color: "text-orange-600 bg-orange-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "events",
       name: "Eventos & Marketing",
       description: "Organizadores, agências, promotores",
       icon: Users,
-      color: "text-purple-600 bg-purple-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "education",
       name: "Educação & Formação",
       description: "Escolas, universidades, cursos",
       icon: GraduationCap,
-      color: "text-indigo-600 bg-indigo-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "healthcare",
       name: "Saúde & Bem-estar",
       description: "Clínicas, ginásios, spas, consultórios",
       icon: Heart,
-      color: "text-red-600 bg-red-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "corporate",
       name: "Empresarial & B2B",
       description: "Grandes empresas, indústria, logística",
       icon: Building,
-      color: "text-gray-600 bg-gray-50"
+      color: "text-black bg-gray-50"
     },
     {
       id: "creative",
       name: "Criativo & Arte",
       description: "Design, fotografia, artistas, galerias",
       icon: Palette,
-      color: "text-pink-600 bg-pink-50"
+      color: "text-black bg-gray-50"
     }
   ];
 
@@ -89,41 +89,6 @@ const OnboardingStep2 = ({ onNext, onBack }: OnboardingStep2Props) => {
             </p>
           </div>
 
-          {/* Benefícios por Segmento */}
-          <div className="space-y-6">
-            <h3 className="font-semibold text-lg">Soluções Personalizadas:</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Store className="h-4 w-4 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Retalho</h4>
-                  <p className="text-sm text-muted-foreground">QR codes para produtos, promoções e fidelização</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Utensils className="h-4 w-4 text-orange-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Restauração</h4>
-                  <p className="text-sm text-muted-foreground">Menus digitais, reservas e avaliações automáticas</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Users className="h-4 w-4 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Eventos</h4>
-                  <p className="text-sm text-muted-foreground">Check-ins, networking e partilha de conteúdos</p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Progresso */}
           <div className="bg-card rounded-lg p-6 border">

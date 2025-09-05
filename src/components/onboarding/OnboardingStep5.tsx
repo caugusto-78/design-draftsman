@@ -65,42 +65,6 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
             </p>
           </div>
 
-          {/* Lista de Funcionalidades */}
-          <div className="space-y-6">
-            <h3 className="font-semibold text-lg">Principais Ferramentas:</h3>
-            <div className="space-y-4">
-              {features.map((feature) => {
-                const Icon = feature.icon;
-                return (
-                  <div key={feature.id} className="flex items-start space-x-4">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${feature.color}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold">{feature.name}</h4>
-                      <p className="text-sm text-muted-foreground">{feature.description}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Dicas Rápidas */}
-          <div className="bg-card rounded-lg p-6 border">
-            <h4 className="font-medium mb-4 flex items-center">
-              <CheckCircle className="h-4 w-4 mr-2 text-green-600" />
-              Dicas para Começar
-            </h4>
-            <div className="space-y-2">
-              {quickTips.map((tip, index) => (
-                <div key={index} className="flex items-start space-x-2 text-sm">
-                  <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-muted-foreground">{tip}</span>
-                </div>
-              ))}
-            </div>
-          </div>
 
           {/* Progresso */}
           <div className="bg-card rounded-lg p-6 border">
@@ -143,30 +107,6 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
                 </div>
               </div>
 
-              <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
-                <h4 className="font-medium text-primary mb-3 flex items-center">
-                  <Rocket className="h-4 w-4 mr-2" />
-                  Próximos Passos
-                </h4>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span>Explore o dashboard personalizado</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span>Crie o seu primeiro QR code</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span>Experimente os templates recomendados</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
-                    <span>Configure integrações avançadas</span>
-                  </div>
-                </div>
-              </div>
 
               <div className="flex space-x-3">
                 <Button onClick={onBack} variant="outline" size="lg" className="flex-1">
@@ -174,7 +114,7 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
                   Rever
                 </Button>
                 <Button 
-                  onClick={onNext} 
+                  onClick={() => window.location.href = "/"} 
                   className="flex-1" 
                   size="lg"
                 >

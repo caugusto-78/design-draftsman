@@ -21,67 +21,21 @@ const Login = () => {
               <span className="text-2xl font-bold">MIDIACODE</span>
             </div>
             <h1 className="text-4xl font-bold leading-tight">
-              Bem-vindo de volta!
+              Bem-vindo
             </h1>
             <p className="text-xl text-muted-foreground">
               Continue a criar QR codes que convertem visitantes em resultados
             </p>
           </div>
 
-          {/* Benefícios Visuais */}
-          <div className="space-y-6">
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-primary font-semibold">1</span>
-              </div>
-              <div>
-                <h3 className="font-semibold">Acesso Imediato</h3>
-                <p className="text-sm text-muted-foreground">Entre e comece a criar QR codes em segundos</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-primary font-semibold">2</span>
-              </div>
-              <div>
-                <h3 className="font-semibold">Dashboard Personalizado</h3>
-                <p className="text-sm text-muted-foreground">Veja seus projetos e estatísticas num só lugar</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start space-x-4">
-              <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <span className="text-primary font-semibold">3</span>
-              </div>
-              <div>
-                <h3 className="font-semibold">Sincronização Total</h3>
-                <p className="text-sm text-muted-foreground">Acesse de qualquer dispositivo, sempre atualizado</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Demonstração Visual */}
+          {/* Progresso */}
           <div className="bg-card rounded-lg p-6 border">
             <div className="flex items-center justify-between mb-4">
-              <h4 className="font-medium">Seus QR Codes Recentes</h4>
-              <span className="text-sm text-muted-foreground">5 ativos</span>
+              <h4 className="font-medium">Progresso do Setup</h4>
+              <span className="text-sm text-muted-foreground">Login</span>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-secondary rounded border"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Campanha Verão 2024</p>
-                  <p className="text-xs text-muted-foreground">1.2k scans esta semana</p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-secondary rounded border"></div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium">Menu Restaurante</p>
-                  <p className="text-xs text-muted-foreground">856 scans esta semana</p>
-                </div>
-              </div>
+            <div className="w-full bg-secondary rounded-full h-2">
+              <div className="bg-primary h-2 rounded-full w-[100%] transition-all duration-500"></div>
             </div>
           </div>
         </div>
@@ -203,7 +157,7 @@ const Login = () => {
 
           {/* Onboarding Mobile */}
           <div className="lg:hidden mt-8 text-center space-y-4">
-            <h2 className="text-xl font-semibold">Bem-vindo de volta!</h2>
+            <h2 className="text-xl font-semibold">Bem-vindo</h2>
             <p className="text-muted-foreground">
               Aceda ao seu dashboard e continue a criar QR codes profissionais
             </p>

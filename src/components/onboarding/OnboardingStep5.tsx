@@ -48,10 +48,10 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-start">
         
         {/* Lado Esquerdo - Apresentação das Funcionalidades */}
-        <div className="hidden lg:block space-y-8">
+        <div className="hidden lg:flex flex-col justify-between h-full space-y-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <QrCode className="h-8 w-8 text-primary" />
@@ -93,13 +93,13 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
             </CardHeader>
             
             <CardContent className="space-y-6">
-              <div className="text-center space-y-4">
-                <div className="mx-auto w-20 h-20 bg-green-50 rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-10 w-10 text-green-600" />
+                <div className="text-center space-y-4">
+                <div className="mx-auto w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center">
+                  <CheckCircle className="h-10 w-10 text-black" />
                 </div>
                 
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-green-700">Configuração Completa!</h3>
+                  <h3 className="text-lg font-semibold text-black">Configuração Completa!</h3>
                   <p className="text-sm text-muted-foreground">
                     Personalizámos a plataforma com base nas suas respostas. 
                     Pode começar a criar o seu primeiro QR code agora mesmo.

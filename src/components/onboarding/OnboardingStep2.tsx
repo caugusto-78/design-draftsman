@@ -72,10 +72,10 @@ const OnboardingStep2 = ({ onNext, onBack }: OnboardingStep2Props) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-start">
         
         {/* Lado Esquerdo - Informação do Segmento */}
-        <div className="hidden lg:block space-y-8">
+        <div className="hidden lg:flex flex-col justify-between h-full space-y-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <QrCode className="h-8 w-8 text-primary" />

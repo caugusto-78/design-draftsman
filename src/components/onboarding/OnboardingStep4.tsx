@@ -26,10 +26,10 @@ const OnboardingStep4 = ({ onNext, onBack }: OnboardingStep4Props) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
-      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+      <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-start">
         
         {/* Lado Esquerdo - Informação do Perfil */}
-        <div className="hidden lg:block space-y-8">
+        <div className="hidden lg:flex flex-col justify-between h-full space-y-8">
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
               <QrCode className="h-8 w-8 text-primary" />
@@ -43,41 +43,6 @@ const OnboardingStep4 = ({ onNext, onBack }: OnboardingStep4Props) => {
             </p>
           </div>
 
-          {/* Benefícios do Perfil */}
-          <div className="space-y-6">
-            <h3 className="font-semibold text-lg">Porquê estas informações?</h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Building className="h-4 w-4 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Branding Automático</h4>
-                  <p className="text-sm text-muted-foreground">Os seus QR codes incluirão automaticamente informações da empresa</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Globe className="h-4 w-4 text-green-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Integração com Website</h4>
-                  <p className="text-sm text-muted-foreground">Links diretos para o seu website em QR codes de contacto</p>
-                </div>
-              </div>
-              
-              <div className="flex items-start space-x-4">
-                <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-4 w-4 text-purple-600" />
-                </div>
-                <div>
-                  <h4 className="font-semibold">Contacto Facilitado</h4>
-                  <p className="text-sm text-muted-foreground">QR codes para contacto direto incluirão estes dados</p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Progresso */}
           <div className="bg-card rounded-lg p-6 border">

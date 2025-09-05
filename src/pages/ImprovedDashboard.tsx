@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
-import { QrCode, FolderOpen, BarChart3, Settings, Plus, Zap, Clock, Users, FileText, PlayCircle, ArrowRight, Star, TrendingUp, Home, Search, File, Link, Share2, Video, TreePine, Mail, Phone, MapPin, ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { QrCode, FolderOpen, BarChart3, Settings, Plus, Zap, Clock, Users, FileText, PlayCircle, ArrowRight, Star, TrendingUp, Home, Search, File, Link, Share2, Video, TreePine, Mail, Phone, MapPin, ChevronLeft, ChevronRight, Menu, X, User } from "lucide-react";
 import HeroSection from "@/components/HeroSection";
 const ImprovedDashboard = () => {
   const navigate = useNavigate();
@@ -182,10 +182,8 @@ const ImprovedDashboard = () => {
                 </Button>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 bg-muted-foreground/30 rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4 bg-muted-foreground/50 rounded-full"></div>
-                  </div>
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center cursor-pointer hover:bg-muted/80 transition-colors">
+                  <User className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
                   <h1 className="text-xl lg:text-2xl font-bold text-foreground">Olá, João!</h1>

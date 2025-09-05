@@ -74,8 +74,9 @@ const HeroSection = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-lg text-left">Criar QR Code</div>
-                  <div className="text-sm opacity-90 text-left leading-relaxed">
-                    Comece a criar o seu conteúdo
+                  <div className="text-sm opacity-90 text-left leading-tight">
+                    <div>Comece a criar o</div>
+                    <div>seu conteúdo</div>
                   </div>
                 </div>
               </div>
@@ -92,8 +93,9 @@ const HeroSection = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-lg text-foreground text-left">Novo Workspace</div>
-                  <div className="text-sm text-muted-foreground text-left leading-relaxed">
-                    Organize os seus projetos por categorias
+                  <div className="text-sm text-muted-foreground text-left leading-tight">
+                    <div>Organize os seus projetos</div>
+                    <div>por categorias</div>
                   </div>
                 </div>
               </div>

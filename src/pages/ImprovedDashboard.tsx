@@ -174,6 +174,14 @@ const ImprovedDashboard = () => {
           <div className="px-4 lg:px-6 py-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
+                <Badge variant="outline" className="border-foreground text-foreground">
+                  {stats.daysLeft} dias de trial
+                </Badge>
+                <Button size="sm">
+                  Upgrade
+                </Button>
+              </div>
+              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
                   <div className="w-6 h-6 bg-muted-foreground/30 rounded-full flex items-center justify-center">
                     <div className="w-4 h-4 bg-muted-foreground/50 rounded-full"></div>
@@ -183,11 +191,6 @@ const ImprovedDashboard = () => {
                   <h1 className="text-xl lg:text-2xl font-bold text-foreground">Olá, João!</h1>
                   <p className="text-sm lg:text-base text-muted-foreground">Bem-vindo de volta ao seu dashboard MiMeCode</p>
                 </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
-                  {stats.daysLeft} dias de trial
-                </Badge>
               </div>
             </div>
           </div>

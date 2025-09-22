@@ -116,7 +116,7 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
                   Rever
                 </Button>
                 <Button 
-                  onClick={() => navigate('/dashboard')} 
+                  onClick={() => navigate('/improved-dashboard')} 
                   className="flex-1" 
                   size="lg"
                 >

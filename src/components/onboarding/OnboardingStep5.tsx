@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { QrCode, ArrowRight, ArrowLeft, Zap, BarChart, Palette, Share2, CheckCircle, Rocket } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface OnboardingStep5Props {
   onNext: () => void;
@@ -8,6 +9,7 @@ interface OnboardingStep5Props {
 }
 
 const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
+  const navigate = useNavigate();
   const features = [
     {
       id: "quick_creation",
@@ -114,7 +116,7 @@ const OnboardingStep5 = ({ onNext, onBack }: OnboardingStep5Props) => {
                   Rever
                 </Button>
                 <Button 
-                  onClick={() => window.location.href = "/"} 
+                  onClick={() => navigate('/dashboard')} 
                   className="flex-1" 
                   size="lg"
                 >

@@ -5,9 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { QrCode, Mail, Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
@@ -133,7 +135,11 @@ const Login = () => {
                 </div>
               </div>
 
-              <Button className="w-full" size="lg">
+              <Button 
+                className="w-full" 
+                size="lg" 
+                onClick={() => navigate('/onboarding')}
+              >
                 Entrar na Conta
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

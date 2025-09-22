@@ -20,12 +20,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ImprovedDashboard />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Index />} />
           <Route path="/wireframe" element={<WireframePrivateAreaDemo />} />
           <Route path="/onboarding" element={<FirstTimeOnboarding />} />
           <Route path="/create-qr" element={<CreateQRCode />} />
+          <Route path="/improved-dashboard" element={<ImprovedDashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

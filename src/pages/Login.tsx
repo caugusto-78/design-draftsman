@@ -29,17 +29,6 @@ const Login = () => {
               Continue a criar QR codes que convertem visitantes em resultados
             </p>
           </div>
-
-          {/* Progresso */}
-          <div className="bg-card rounded-lg p-6 border">
-            <div className="flex items-center justify-between mb-4">
-              <h4 className="font-medium">Progresso do Setup</h4>
-              <span className="text-sm text-muted-foreground">Login</span>
-            </div>
-            <div className="w-full bg-secondary rounded-full h-2">
-              <div className="bg-primary h-2 rounded-full w-[100%] transition-all duration-500"></div>
-            </div>
-          </div>
         </div>
 
         {/* Lado Direito - Formulário de Login */}
